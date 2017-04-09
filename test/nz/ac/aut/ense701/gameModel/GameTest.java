@@ -422,7 +422,8 @@ public class GameTest extends junit.framework.TestCase
     {
         //Need to move to a place where there is a kiwi
         assertTrue (" This move valid", playerMoveEast(5));
-        game.countKiwi();
+        //game.countKiwi();
+        // TODO: update test to check if kiwi can be picked up
         assertEquals("Wrong count", game.getKiwiSavedCount(), 1);
     }
 

@@ -35,14 +35,14 @@ public class KiwiTest {
 
     @Test
     public void testCountedNotCounted() {
-        assertFalse("Should not be counted", kiwi.counted());
+        assertFalse("Should not be safe", kiwi.saved());
     }
     
     @Test
-    public void testCountedIsCounted() {
-        assertFalse("Should not be counted", kiwi.counted());
-        kiwi.count();
-        assertTrue("Should  be counted", kiwi.counted());
+    public void testCountedIsSaved() {
+        assertFalse("Should not be saved", kiwi.saved());
+        kiwi.setSafe(true);
+        assertTrue("Should  be saved", kiwi.saved());
     }
 
     /**

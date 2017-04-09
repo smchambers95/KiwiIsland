@@ -1,5 +1,6 @@
 package nz.ac.aut.ense701.main;
 
+import java.io.IOException;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gui.KiwiCountUI;
 
@@ -16,7 +17,7 @@ public class Main
      * 
      * @param args the command line arguments
      */
-    public static void main(String[] args) 
+    public static void main(String[] args) throws IOException 
     {
         // create the game object
         final Game game = new Game();
