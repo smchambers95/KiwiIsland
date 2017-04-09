@@ -18,7 +18,7 @@ import sun.audio.AudioStream;
  */
 public class ResourceManager {
     HashMap<Images,BufferedImage> imageMap;
-    HashMap<Images,AudioStream> soundMap;
+    HashMap<Sounds,AudioStream> soundMap;
     BufferedImage img;
     
     public ResourceManager() throws IOException
