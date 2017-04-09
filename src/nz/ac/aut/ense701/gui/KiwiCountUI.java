@@ -2,12 +2,14 @@ package nz.ac.aut.ense701.gui;
 
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameEventListener;
 import nz.ac.aut.ense701.gameModel.GameState;
 import nz.ac.aut.ense701.gameModel.InputHandler;
 import nz.ac.aut.ense701.gameModel.MoveDirection;
+import nz.ac.aut.ense701.gameModel.ResourceManager;
 
 /*
  * User interface form for Kiwi Island.
@@ -24,10 +26,11 @@ public class KiwiCountUI
      * Creates a GUI for the KiwiIsland game.
      * @param game the game object to represent with this GUI.
      */
-    public KiwiCountUI(Game game)
+    public KiwiCountUI(Game game) throws IOException
     {
         assert game != null : "Make sure game object is created before UI";
         this.game = game;
+        resourceManager = new ResourceManager();
         setAsGameListener();
         initComponents();
         initIslandGrid();
@@ -37,6 +40,7 @@ public class KiwiCountUI
         pnlIsland.addKeyListener(inputHandler);        
         listInventory.addKeyListener(inputHandler);
         listObjects.addKeyListener(inputHandler);
+        
     }
     
     /**
@@ -566,4 +570,5 @@ public class KiwiCountUI
     // End of variables declaration//GEN-END:variables
 
     private Game game;
+    private ResourceManager resourceManager;
 }
