@@ -47,7 +47,7 @@ public class Game
         totalPredators = 0;
         totalKiwis = 0;
         predatorsTrapped = 0;
-        kiwiCount = 0;
+        kiwiSavedCount = 0;
         initialiseIslandFromFile("IslandData.txt");
         drawIsland();
         state = GameState.PLAYING;
@@ -206,12 +206,12 @@ public class Game
     }
     
     /**
-     * How many kiwis have been counted?
+     * How many kiwis have been saved?
      * @return count
      */
-    public int getKiwiCount()
+    public int getKiwiSavedCount()
     {
-        return kiwiCount;
+        return kiwiSavedCount;
     }
     
     /**
@@ -285,21 +285,6 @@ public class Game
         return result;
     }
     
-    /**
-     * Is this object a countable kiwi
-     * @param itemToCount
-     * @return true if is an item is a kiwi.
-     */
-    public boolean canCount(Object itemToCount)
-    {
-        boolean result = (itemToCount != null)&&(itemToCount instanceof Kiwi);
-        if(result)
-        {
-            Kiwi kiwi = (Kiwi) itemToCount;
-            result = !kiwi.counted();
-        }
-        return result;
-    }
     /**
      * Is this object usable
      * @param itemToUse
@@ -393,6 +378,13 @@ public class Game
             // player has picked up an item: remove from grid square
             island.removeOccupant(player.getPosition(), (Item)item);
             
+            // If the item was a kiwi, check whether or not the kiwi was safe and change the kiwi saved count accordingly
+            if(item instanceof Kiwi){
+                if(((Kiwi) item).saved()){
+                    ((Kiwi) item).setSafe(false);
+                    kiwiSavedCount--;
+                }
+            }
             
             // everybody has to know about the change
             notifyGameEventListeners();
@@ -419,6 +411,15 @@ public class Game
             {
                 // drop successful: everybody has to know that
                 notifyGameEventListeners();
+                
+                // If the item was a kiwi, check whether or not it was dropped in a safe zone
+                if(item instanceof Kiwi){
+                    if(island.getTerrain(player.getPosition()).getStringRepresentation().equals("S")){
+                        ((Kiwi) item).setSafe(true);
+                        kiwiSavedCount++;
+                        updateGameState();
+                    }
+                }
             }
             else
             {
@@ -428,7 +429,6 @@ public class Game
         }
         return success;
     } 
-      
     
     /**
      * Uses an item in the player's inventory.
@@ -468,24 +468,6 @@ public class Game
         }
         updateGameState();
         return success;
-    }
-    
-    /**
-     * Count any kiwis in this position
-     */
-    public void countKiwi() 
-    {
-        //check if there are any kiwis here
-        for (Occupant occupant : island.getOccupants(player.getPosition())) {
-            if (occupant instanceof Kiwi) {
-                Kiwi kiwi = (Kiwi) occupant;
-                if (!kiwi.counted()) {
-                    kiwi.count();
-                    kiwiCount++;
-                }
-            }
-        }
-        updateGameState();
     }
        
     /**
@@ -567,12 +549,12 @@ public class Game
             message = "You win! You have done an excellent job and trapped all the predators.";
             this.setWinMessage(message);
         }
-        else if(kiwiCount == totalKiwis)
+        else if(kiwiSavedCount == totalKiwis)
         {
             if(predatorsTrapped >= totalPredators * MIN_REQUIRED_CATCH)
             {
                 state = GameState.WON;
-                message = "You win! You have counted all the kiwi and trapped at least 80% of the predators.";
+                message = "You win! You have saved all the kiwi and trapped at least 80% of the predators.";
                 this.setWinMessage(message);
             }
         }
@@ -842,7 +824,7 @@ public class Game
     private Island island;
     private Player player;
     private GameState state;
-    private int kiwiCount;
+    private int kiwiSavedCount;
     private int totalPredators;
     private int totalKiwis;
     private int predatorsTrapped;

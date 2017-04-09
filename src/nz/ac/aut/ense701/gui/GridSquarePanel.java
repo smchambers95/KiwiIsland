@@ -48,6 +48,7 @@ public class GridSquarePanel extends javax.swing.JPanel
             case WETLAND : color = Color.BLUE; break;
             case SCRUB : color = Color.DARK_GRAY;   break;
             case WATER    : color = Color.CYAN;   break;
+            case SAFE : color = Color.RED;   break;
             default  : color = Color.LIGHT_GRAY; break;
         }
         

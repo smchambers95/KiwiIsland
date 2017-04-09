@@ -106,7 +106,7 @@ public class KiwiCountUI
         progBackpackWeight.setValue(playerValues[Game.WEIGHT_INDEX]);
         
         //Update Kiwi and Predator information
-        txtKiwisSaved.setText(Integer.toString(game.getKiwiCount()) );
+        txtKiwisSaved.setText(Integer.toString(game.getKiwiSavedCount()) );
         
         // update inventory list
         listInventory.setListData(game.getPlayerInventory());
@@ -120,7 +120,6 @@ public class KiwiCountUI
         listObjects.clearSelection();
         listObjects.setToolTipText(null);
         btnCollect.setEnabled(false);
-        btnCount.setEnabled(false);
         
         // update movement buttons
         btnMoveNorth.setEnabled(game.isPlayerMovePossible(MoveDirection.NORTH));
@@ -166,7 +165,6 @@ public class KiwiCountUI
         javax.swing.JScrollPane scrlObjects = new javax.swing.JScrollPane();
         listObjects = new javax.swing.JList();
         btnCollect = new javax.swing.JButton();
-        btnCount = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kiwi Count");
@@ -253,7 +251,6 @@ public class KiwiCountUI
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         pnlPlayerData.add(lblKiwisSaved, gridBagConstraints);
-        lblKiwisSaved.getAccessibleContext().setAccessibleName("Kiwis Saved :");
 
         txtKiwisSaved.setText("0");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -465,22 +462,6 @@ public class KiwiCountUI
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlObjects.add(btnCollect, gridBagConstraints);
 
-        btnCount.setText("Count");
-        btnCount.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCountActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        pnlObjects.add(btnCount, gridBagConstraints);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -526,7 +507,6 @@ public class KiwiCountUI
         if ( occ != null )
         {
             btnCollect.setEnabled(game.canCollect(occ));
-            btnCount.setEnabled(game.canCount(occ));
             listObjects.setToolTipText(game.getOccupantDescription(occ));
         }
     }//GEN-LAST:event_listObjectsValueChanged
@@ -544,10 +524,6 @@ public class KiwiCountUI
             listInventory.setToolTipText(game.getOccupantDescription(item));
         }
     }//GEN-LAST:event_listInventoryValueChanged
-
-    private void btnCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCountActionPerformed
-        game.countKiwi();
-    }//GEN-LAST:event_btnCountActionPerformed
     
     /**
      * Creates and initialises the island grid.
@@ -573,7 +549,6 @@ public class KiwiCountUI
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCollect;
-    private javax.swing.JButton btnCount;
     private javax.swing.JButton btnDrop;
     private javax.swing.JButton btnMoveEast;
     private javax.swing.JButton btnMoveNorth;
