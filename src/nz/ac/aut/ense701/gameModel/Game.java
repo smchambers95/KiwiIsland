@@ -297,8 +297,12 @@ public class Game
         {
             //Food can always be used (though may be wasted)
             // so no need to change result
-
-            if(itemToUse instanceof Tool)
+            
+            // Kiwi's cannot be used
+            if(itemToUse instanceof Kiwi){
+                result = false;
+            }
+            else if(itemToUse instanceof Tool)
             {
                 Tool tool = (Tool)itemToUse;
                 //Traps can only be used if there is a predator to catch
