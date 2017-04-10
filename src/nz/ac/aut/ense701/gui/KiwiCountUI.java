@@ -31,7 +31,6 @@ public class KiwiCountUI
     {
         assert game != null : "Make sure game object is created before UI";
         this.game = game;
-        resourceManager = new ResourceManager();
         setAsGameListener();
         initComponents();
         initIslandGrid();
