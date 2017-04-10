@@ -72,13 +72,7 @@ public class ResourceManager {
 //        imageMap.put(Images.HOLE,img);
         
         //Load sound assets    
-        addSound(Sounds.SETTRAP, "../sounds/setTrapSound.wav");
-        
-        playSound(Sounds.SETTRAP);
-        
-                
-        
-     
+        addSound(Sounds.SETTRAP, "../sounds/setTrapSound.wav");  
     }
     
     //get clip from soundMap and play
