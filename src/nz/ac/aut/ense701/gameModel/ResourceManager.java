@@ -8,20 +8,37 @@ package nz.ac.aut.ense701.gameModel;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import sun.audio.AudioStream;
+
+
+
 
 /**
  *
  * @author Sean 
  */
 public class ResourceManager {
-    HashMap<Images,BufferedImage> imageMap;
-    HashMap<Sounds,AudioStream> soundMap;
-    BufferedImage img;
+    public HashMap<Images,BufferedImage> imageMap;
+    public HashMap<Sounds,Clip> soundMap;
     
-    public ResourceManager() throws IOException
+    public Mixer mixer;
+    public Clip clip;
+    
+    BufferedImage img;
+    File audioFile;
+    
+    
+    public ResourceManager() throws IOException, UnsupportedAudioFileException
     {
         imageMap  = new HashMap();
         soundMap = new HashMap();
@@ -55,7 +72,49 @@ public class ResourceManager {
         imageMap.put(Images.HOLE,img);
         
         //Load sound assets    
+        addSound(Sounds.SETTRAP, "../sounds/setTrapSound.wav");
+        
+        playSound(Sounds.SETTRAP);
+        
+                
+        
+     
     }
     
+    //get clip from soundMap and play
+    public void playSound(Sounds soundName)
+    {   
+        soundMap.get(soundName).start();
+    }
+    
+    //
+    public void addSound(Sounds soundName, String soundFileURL)
+    {
+        Mixer.Info[] mixInfos = AudioSystem.getMixerInfo();
+        mixer = AudioSystem.getMixer(mixInfos[0]);
+        DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);  
+        try{
+            clip = (Clip) mixer.getLine(dataInfo);
+        }
+        catch(LineUnavailableException lue)
+        {
+            lue.printStackTrace();
+        }
+        
+        try{
+            URL soundURL = ResourceManager.class.getResource(soundFileURL);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundURL);           
+            clip.open(audioStream);  
+            
+            //Add sound clip to soundMap
+            soundMap.put(soundName, clip);
+        }
+        catch(LineUnavailableException lue){
+            System.out.println("Make sure the sound file you are reading in, is 16bit wav.");
+            lue.printStackTrace();
+        }
+        catch(UnsupportedAudioFileException uafe){uafe.printStackTrace();}
+        catch(IOException ioe){ioe.printStackTrace();}
+    }
     
 }

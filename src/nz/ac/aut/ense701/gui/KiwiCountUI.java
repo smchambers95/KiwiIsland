@@ -3,6 +3,7 @@ package nz.ac.aut.ense701.gui;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.io.IOException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JOptionPane;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameEventListener;
@@ -26,7 +27,7 @@ public class KiwiCountUI
      * Creates a GUI for the KiwiIsland game.
      * @param game the game object to represent with this GUI.
      */
-    public KiwiCountUI(Game game) throws IOException
+    public KiwiCountUI(Game game) throws IOException, UnsupportedAudioFileException
     {
         assert game != null : "Make sure game object is created before UI";
         this.game = game;

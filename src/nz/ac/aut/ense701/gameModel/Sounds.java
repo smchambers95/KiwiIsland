@@ -13,5 +13,6 @@ public enum Sounds {
     PICKUP,
     WIN,
     LOSE,
-    DROP
+    DROP,
+    SETTRAP
 }
