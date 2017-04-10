@@ -46,30 +46,30 @@ public class ResourceManager {
         //Load in images first
         //Load Player, and fauna sprites.
         //Player
-        img = ImageIO.read(new File("textures/playerSprite.jpg"));
-        imageMap.put(Images.PLAYER,img);
-        //Kiwi
-        img = ImageIO.read(new File("textures/kiwiSprite.png"));
-        imageMap.put(Images.KIWI,img);
-        //Possum
-        img = ImageIO.read(new File("textures/possumSprite.gif"));
-        imageMap.put(Images.POSSUM,img);
-        //Stoat
-        img = ImageIO.read(new File("textures/stoatSprite.png"));
-        imageMap.put(Images.STOAT,img);
-        //Textures
-        //Grass
-        img = ImageIO.read(new File("textures/grassTexture.jpg"));
-        imageMap.put(Images.GRASS,img);
-        //Water
-        img = ImageIO.read(new File("textures/waterTexture.jpg"));
-        imageMap.put(Images.WATER,img);
-        //Sand
-        img = ImageIO.read(new File("textures/sandTexture.jpg"));
-        imageMap.put(Images.SAND,img);
-        //Hole
-        img = ImageIO.read(new File("textures/holeTexture.png"));
-        imageMap.put(Images.HOLE,img);
+//        img = ImageIO.read(new File("textures/playerSprite.jpg"));
+//        imageMap.put(Images.PLAYER,img);
+//        //Kiwi
+//        img = ImageIO.read(new File("textures/kiwiSprite.png"));
+//        imageMap.put(Images.KIWI,img);
+//        //Possum
+//        img = ImageIO.read(new File("textures/possumSprite.gif"));
+//        imageMap.put(Images.POSSUM,img);
+//        //Stoat
+//        img = ImageIO.read(new File("textures/stoatSprite.png"));
+//        imageMap.put(Images.STOAT,img);
+//        //Textures
+//        //Grass
+//        img = ImageIO.read(new File("textures/grassTexture.jpg"));
+//        imageMap.put(Images.GRASS,img);
+//        //Water
+//        img = ImageIO.read(new File("textures/waterTexture.jpg"));
+//        imageMap.put(Images.WATER,img);
+//        //Sand
+//        img = ImageIO.read(new File("textures/sandTexture.jpg"));
+//        imageMap.put(Images.SAND,img);
+//        //Hole
+//        img = ImageIO.read(new File("textures/holeTexture.png"));
+//        imageMap.put(Images.HOLE,img);
         
         //Load sound assets    
         addSound(Sounds.SETTRAP, "../sounds/setTrapSound.wav");
