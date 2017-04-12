@@ -47,7 +47,7 @@ public class Game
         totalPredators = 0;
         totalKiwis = 0;
         predatorsTrapped = 0;
-        kiwiSavedCount = 0;
+        savedKiwiCount = 0;
         initialiseIslandFromFile("IslandData.txt");
         drawIsland();
         state = GameState.PLAYING;
@@ -207,9 +207,18 @@ public class Game
      * How many kiwis have been saved?
      * @return count
      */
-    public int getKiwiSavedCount()
+    public int getSavedKiwisCount()
     {
-        return kiwiSavedCount;
+        return savedKiwiCount;
+    }
+    
+    /**
+     * How many kiwis are in the world?
+     * @return count
+     */
+    public int getTotalKiwis()
+    {
+        return totalKiwis;
     }
     
     /**
@@ -384,7 +393,7 @@ public class Game
             if(item instanceof Kiwi){
                 if(((Kiwi) item).saved()){
                     ((Kiwi) item).setSafe(false);
-                    kiwiSavedCount--;
+                    savedKiwiCount--;
                 }
             }
             
@@ -418,7 +427,7 @@ public class Game
                 if(item instanceof Kiwi){
                     if(island.getTerrain(player.getPosition()).getStringRepresentation().equals("S")){
                         ((Kiwi) item).setSafe(true);
-                        kiwiSavedCount++;
+                        savedKiwiCount++;
                         updateGameState();
                     }
                 }
@@ -551,7 +560,7 @@ public class Game
             message = "You win! You have done an excellent job and trapped all the predators.";
             this.setWinMessage(message);
         }
-        else if(kiwiSavedCount == totalKiwis)
+        else if(savedKiwiCount == totalKiwis)
         {
             if(predatorsTrapped >= totalPredators * MIN_REQUIRED_CATCH)
             {
@@ -823,7 +832,7 @@ public class Game
     private Island island;
     private Player player;
     private GameState state;
-    private int kiwiSavedCount;
+    private int savedKiwiCount;
     private int totalPredators;
     private int totalKiwis;
     private int predatorsTrapped;

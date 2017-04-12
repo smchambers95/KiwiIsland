@@ -202,7 +202,7 @@ public class GameTest extends junit.framework.TestCase
     @Test
     public void testGetKiwiCountInitial()
     {
-       assertEquals("Shouldn't have counted any kiwis yet",game.getKiwiSavedCount(),0); 
+       assertEquals("Shouldn't have counted any kiwis yet",game.getSavedKiwisCount(),0); 
     }
     /**
      * Test for mutator methods
@@ -404,7 +404,7 @@ public class GameTest extends junit.framework.TestCase
         // Drop the Kiwi in the safezone
         game.dropItem(kiwi);
         
-        assertEquals("Wrong saved count", game.getKiwiSavedCount(), 1);
+        assertEquals("Wrong saved count", game.getSavedKiwisCount(), 1);
     }
 
 /**

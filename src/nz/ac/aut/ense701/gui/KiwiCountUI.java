@@ -110,7 +110,7 @@ public class KiwiCountUI
         progBackpackWeight.setValue(playerValues[Game.WEIGHT_INDEX]);
         
         //Update Kiwi and Predator information
-        txtKiwisSaved.setText(Integer.toString(game.getKiwiSavedCount()) );
+        txtKiwisSaved.setText(Integer.toString(game.getSavedKiwisCount()) + "/" + game.getTotalKiwis());
         
         // update inventory list
         listInventory.setListData(game.getPlayerInventory());
