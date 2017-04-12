@@ -22,7 +22,6 @@ public class Player
     private boolean   alive;
     private Set<Item> backpack;
     private final double    maxBackpackWeight;
-    private final double    maxBackpackSize;   
     
     /**
      * Constructs a new player object.
@@ -30,18 +29,16 @@ public class Player
      * @param position the initial position of the player
      * @param name the name of the player
      * @param maxStamina the maximum stamina level of the player
-     * @param maxBackpackWeight the most weight that can be in a backpack
-     * @param maxBackpackSize the maximum size items that will fit in the backpack     
+     * @param maxBackpackWeight the most weight that can be in a backpack 
      */    
     public Player(Position position, String name, double maxStamina,
-                  double maxBackpackWeight, double maxBackpackSize)
+                  double maxBackpackWeight)
     {
        this.position          = position;
        this.name              = name;
        this.maxStamina        = maxStamina;
        this.stamina = maxStamina;
        this.maxBackpackWeight = maxBackpackWeight;
-       this.maxBackpackSize = maxBackpackSize;
        this.alive = true;
        this.backpack = new HashSet<Item>();
     }   
@@ -123,32 +120,6 @@ public class Player
     {
         return (this.stamina >= getStaminaNeededToMove(terrain));
     }
-    
-        
-    /**
-     * Get current size of backpack.
-     * 
-     * @return currentBackpackSize
-     */
-    public double getCurrentBackpackSize(){
-        double totalSize = 0.0;
-        for ( Item item : backpack ) 
-        {
-            totalSize += item.getSize();
-        }
-        return totalSize;
-    }
-
-    /**
-     * Gets the maximum Backpack size.
-     * 
-     * @return the maximum backpack size
-     */
-    public double getMaximumBackpackSize()
-    {
-        return maxBackpackSize;
-    }
-
     
     /**
      * Get current weight of backpack.
@@ -299,8 +270,6 @@ public class Player
         boolean success = false;
         if ( item != null && item.isOkToCarry() )
         {
-            double  addedSize   = getCurrentBackpackSize() + item.getSize();
-            boolean enoughRoom  = (addedSize <= this.maxBackpackSize);
             double  addedWeight = getCurrentBackpackWeight() + item.getWeight();
             //Will weight fit in backpack?
             boolean notTooHeavy = (addedWeight <= this.maxBackpackWeight);
@@ -313,7 +282,7 @@ public class Player
                 additionalTrap = (tool.isTrap() && this.hasTrap());
             }       
                    
-            if ( enoughRoom && notTooHeavy && !additionalTrap)
+            if (notTooHeavy && !additionalTrap)
             {
                 success = backpack.add(item);
                 // when item is collected, it is no longer "on the island"

@@ -10,7 +10,6 @@ package nz.ac.aut.ense701.gameModel;
 public  abstract class Item extends Occupant
 {
     private double weight;
-    private double size;
 
     /**
      * Construct an item with known attributes.
@@ -18,11 +17,10 @@ public  abstract class Item extends Occupant
      * @param name the name of the item
      * @param description a longer description of the item
      */
-    public Item(Position pos, String name, String description, double weight, double size) 
+    public Item(Position pos, String name, String description, double weight) 
     {
         super(pos, name, description);
         this.weight = weight;
-        this.size = size;
     }
     
      /**
@@ -32,15 +30,6 @@ public  abstract class Item extends Occupant
     public double getWeight() {
         return this.weight;
     }
-
-    /**
-     * Gets the size of the item
-     * @return the size of the item
-     */
-    public double getSize() {
-        return this.size;
-    }    
-
     
     /**
      * Is it OK to pick up and carry this item?
@@ -50,7 +39,7 @@ public  abstract class Item extends Occupant
      */
     public boolean isOkToCarry()
     {
-        return size > 0;
+        return weight >= 0;
     }
     
 }

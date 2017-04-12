@@ -21,9 +21,9 @@ public class Food extends Item
      * @param energy stamina contribution of the food object
      *               when the player uses the object
      */
-    public Food(Position pos, String name, String description, double weight, double size, double energy) 
+    public Food(Position pos, String name, String description, double weight, double energy) 
     {
-        super(pos, name, description,weight, size);
+        super(pos, name, description,weight);
         this.energy = energy;
     }
 

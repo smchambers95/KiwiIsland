@@ -9,7 +9,6 @@ package nz.ac.aut.ense701.gameModel;
 public class Kiwi  extends Item
 {
     private static final double KIWI_WEIGHT = 1.0;
-    private static final double KIWI_SIZE = 1.0;
     
     private boolean safe;
     /**
@@ -20,7 +19,7 @@ public class Kiwi  extends Item
      */
     public Kiwi(Position pos, String name, String description) 
     {
-        super(pos, name, description, KIWI_WEIGHT, KIWI_SIZE);
+        super(pos, name, description, KIWI_WEIGHT);
         safe = false;
     } 
 

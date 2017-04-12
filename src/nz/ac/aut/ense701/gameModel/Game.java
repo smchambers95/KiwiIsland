@@ -198,8 +198,6 @@ public class Game
         playerValues[MAXSTAMINA_INDEX]= (int) player.getMaximumStaminaLevel();
         playerValues[MAXWEIGHT_INDEX ]= (int) player.getMaximumBackpackWeight();
         playerValues[WEIGHT_INDEX]= (int) player.getCurrentBackpackWeight();
-        playerValues[MAXSIZE_INDEX ]= (int) player.getMaximumBackpackSize();
-        playerValues[SIZE_INDEX]= (int) player.getCurrentBackpackSize();
             
         return playerValues;
         
@@ -762,12 +760,11 @@ public class Game
         int    playerPosCol            = input.nextInt();
         double playerMaxStamina        = input.nextDouble();
         double playerMaxBackpackWeight = input.nextDouble();
-        double playerMaxBackpackSize   = input.nextDouble();
         
         Position pos = new Position(island, playerPosRow, playerPosCol);
         player = new Player(pos, playerName, 
                 playerMaxStamina, 
-                playerMaxBackpackWeight, playerMaxBackpackSize);
+                playerMaxBackpackWeight);
         island.updatePlayerPosition(player);
     }
 
@@ -791,15 +788,13 @@ public class Game
             if ( occType.equals("T") )
             {
                 double weight = input.nextDouble();
-                double size   = input.nextDouble();
-                occupant = new Tool(occPos, occName, occDesc, weight, size);
+                occupant = new Tool(occPos, occName, occDesc, weight);
             }
             else if ( occType.equals("E") )
             {
                 double weight = input.nextDouble();
-                double size   = input.nextDouble();
                 double energy = input.nextDouble();
-                occupant = new Food(occPos, occName, occDesc, weight, size, energy);
+                occupant = new Food(occPos, occName, occDesc, weight, energy);
             }
             else if ( occType.equals("H") )
             {

@@ -47,3 +47,4 @@ Temporary Items
 .apdisk
 *.class
 /build/
+nbproject/private/private.properties

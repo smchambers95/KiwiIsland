@@ -14,7 +14,6 @@ import java.util.Set;
 
 public class GridSquare 
 {
-    private static final int MAX_OCCUPANTS = 3;
     private Terrain terrain;
     private boolean visible;
     private boolean explored;
@@ -182,8 +181,7 @@ public class GridSquare
     {
         boolean success = false;
         boolean validNewOccupant = occupant != null;
-        boolean enoughRoom       = occupants.size() < MAX_OCCUPANTS;
-        if ( validNewOccupant && enoughRoom ) 
+        if ( validNewOccupant ) 
         {
             success = occupants.add(occupant);
         }
