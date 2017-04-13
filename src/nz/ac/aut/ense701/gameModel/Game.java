@@ -562,10 +562,10 @@ public class Game
         }
         else if(savedKiwiCount == totalKiwis)
         {
-            if(predatorsTrapped >= totalPredators * MIN_REQUIRED_CATCH)
+            if(predatorsTrapped >= totalPredators)
             {
                 state = GameState.WON;
-                message = "You win! You have saved all the kiwi and trapped at least 80% of the predators.";
+                message = "You win! You have saved all the kiwi and trapped all of the predators.";
                 this.setWinMessage(message);
             }
         }
@@ -837,8 +837,6 @@ public class Game
     private int totalKiwis;
     private int predatorsTrapped;
     private Set<GameEventListener> eventListeners;
-    
-    private final double MIN_REQUIRED_CATCH = 0.8;
         
     private String winMessage = "";
     private String loseMessage  = "";

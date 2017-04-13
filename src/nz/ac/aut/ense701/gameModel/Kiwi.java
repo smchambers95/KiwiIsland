@@ -8,7 +8,7 @@ package nz.ac.aut.ense701.gameModel;
  */
 public class Kiwi  extends Item
 {
-    private static final double KIWI_WEIGHT = 1.0;
+    private static final double KIWI_WEIGHT = 3.0;
     
     private boolean safe;
     /**
