@@ -44,6 +44,13 @@ public class KiwiTest {
         kiwi.setSafe(true);
         assertTrue("Should  be saved", kiwi.saved());
     }
+    
+     @Test
+    public void testKiwiKillable() {
+        assertFalse("Should not be dead", kiwi.isDead());
+        kiwi.kill();
+        assertTrue("Should  be dead", kiwi.isDead());
+    }
 
     /**
      * Test of getStringRepresentation method, of class Kiwi.

@@ -11,6 +11,7 @@ public class Kiwi  extends Item
     private static final double KIWI_WEIGHT = 3.0;
     
     private boolean safe;
+    private boolean dead;
     /**
      * Constructor for objects of class Kiwi
      * @param pos the position of the kiwi object
@@ -21,6 +22,7 @@ public class Kiwi  extends Item
     {
         super(pos, name, description, KIWI_WEIGHT);
         safe = false;
+        dead = false;
     } 
 
     /**
@@ -37,6 +39,22 @@ public class Kiwi  extends Item
      */
     public boolean saved() {
         return safe;
+    }
+    
+    /**
+     * Check if the Kiwi is dead
+     * @return returns the dead status of the kiwi (true if dead)
+     */
+    public boolean isDead(){
+        return dead;
+    }
+    
+    /**
+     * Will set the kiwi's status to dead
+     */
+    public void kill(){
+        safe = false;
+        dead = true;
     }
 
     @Override
