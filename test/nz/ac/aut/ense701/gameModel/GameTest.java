@@ -406,6 +406,20 @@ public class GameTest extends junit.framework.TestCase
         assertEquals("Wrong saved count", game.getSavedKiwisCount(), 1);
     }
 
+    @Test
+    public void testLoseGameOnKiwiDeathFromTrap(){
+        // Add a kiwi to the current square
+        Kiwi kiwi = new Kiwi(playerPosition, "Kiwi", "Kiwi");
+        island.addOccupant(playerPosition, kiwi);
+        
+        // Set a trap in the square of the kiwi
+        Tool trap = new Tool(playerPosition, "Trap", "A trap", 1.0);
+        game.collectItem(trap);
+        game.useItem(trap);
+        
+        // Kiwi should've been killed by the trap
+        assertTrue("Game should be over", game.getState()== GameState.LOST);
+    }
 /**
  * Private helper methods
  */

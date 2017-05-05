@@ -48,6 +48,7 @@ public class Game
         totalKiwis = 0;
         predatorsTrapped = 0;
         savedKiwiCount = 0;
+        deadKiwis = 0;
         initialiseIslandFromFile("IslandData.txt");
         drawIsland();
         state = GameState.PLAYING;
@@ -548,7 +549,13 @@ public class Game
             message = "Sorry, you have lost the game. " + this.getLoseMessage();
             this.setLoseMessage(message);
         }
-        else if (!playerCanMove() )
+        else if(deadKiwis > 0)
+        {
+            state = GameState.LOST;
+            message = "Sorry, you have lost the game. A kiwi has been killed";
+            this.setLoseMessage(message);
+        }
+        else if(!playerCanMove())
         {
             state = GameState.LOST;
             message = "Sorry, you have lost the game. You do not have sufficient stamina to move.";
@@ -836,14 +843,10 @@ public class Game
     private int totalPredators;
     private int totalKiwis;
     private int predatorsTrapped;
+    private int deadKiwis;
     private Set<GameEventListener> eventListeners;
         
     private String winMessage = "";
     private String loseMessage  = "";
     private String playerMessage  = "";   
-
-    
-
-
-
 }
