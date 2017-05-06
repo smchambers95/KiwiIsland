@@ -645,6 +645,7 @@ public class Game
             Occupant occupant = island.getKiwi(current);
             //Predator has been trapped so remove
             island.removeOccupant(current, occupant);
+            deadKiwis++;
         }   
     }
             

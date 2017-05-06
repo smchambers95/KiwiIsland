@@ -301,8 +301,9 @@ public class GameTest extends junit.framework.TestCase
         Predator predator = new Predator(playerPosition,"Rat", "Norway rat");
         island.addOccupant(playerPosition, predator);
         trap.setBroken();
-        game.useItem(trap);
-        assertTrue("Player should still have trap",player.hasItem(trap));
+        game.dropItem(trap);
+        
+        assertFalse("Trapped should be on ground",player.hasItem(trap));
         assertTrue("Predator should still be there as trap broken.", island.hasPredator(playerPosition));
     }
     
@@ -420,7 +421,7 @@ public class GameTest extends junit.framework.TestCase
         // Set a trap in the square of the kiwi
         Tool trap = new Tool(playerPosition, "Trap", "A trap", 1.0);
         game.collectItem(trap);
-        game.useItem(trap);
+        game.dropItem(trap);
         
         // Kiwi should've been killed by the trap
         assertTrue("Game should be over", game.getState()== GameState.LOST);
@@ -438,8 +439,7 @@ public class GameTest extends junit.framework.TestCase
         //Now player needs to trap all predators
         //Predator 1
         boolean moveOK = playerMoveEast(5);
-        game.dropItem(trap);
-        game.collectItem(trap);
+
         
         //Predator 2
         if(moveOK){
