@@ -468,11 +468,25 @@ public class Game
                 else if (item instanceof Tool)
                 {
                     Tool tool = (Tool) item;
-                    //Kill predator or kiwi if trap is used when player is in same square
+                    
                     if (tool.isTrap()&& !tool.isBroken())
                     {
-                        activateTrap();    
+                        Occupant[] occupants = island.getOccupants(player.getPosition());
+                        boolean trapExists = false;
+                        for(Occupant occupant : occupants){
+                            if(occupant instanceof Tool){
+                                Tool tmp = (Tool) occupant;
+                                if(tmp != tool && tmp.isTrap())
+                                    trapExists = true;
+                            }         
+                        }
+                        if(!trapExists)
+                            activateTrap();    
+                        else
+                            collectItem(tool);
                     }
+                    
+                    // Kill predator or kiwi if trap is used when player is in same square                              
                     updateGameState();
                 }
             }          

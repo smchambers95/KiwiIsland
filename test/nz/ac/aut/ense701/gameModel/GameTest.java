@@ -413,6 +413,20 @@ public class GameTest extends junit.framework.TestCase
     }
 
     @Test
+    public void testOneTrapPerSquare()
+    {
+        Tool trap1 = new Tool(playerPosition,"Trap", "Rat trap",1.0);
+        game.collectItem(trap1);
+        game.dropItem(trap1);
+        assertTrue("There should be 1 trap on the square", island.hasOccupant(playerPosition, trap1));
+         
+        Tool trap2 = new Tool(playerPosition,"Trap", "Rat trap",1.0);
+        game.collectItem(trap2);
+        game.dropItem(trap2);
+        assertFalse("Trap 2 shouldn't have been placed in the same square as trap1", island.hasOccupant(playerPosition, trap2));
+    }
+    
+    @Test
     public void testLoseGameOnKiwiDeathFromTrap(){
         // Add a kiwi to the current square
         Kiwi kiwi = new Kiwi(playerPosition, "Kiwi", "Kiwi");
