@@ -161,6 +161,25 @@ public class Island
         return isPredator;
     } 
     
+     public boolean hasKiwi(Position position) 
+    {
+        GridSquare square = getGridSquare(position);
+        Occupant[] occupants = square.getOccupants();
+        boolean isKiwi = false;
+        if(occupants.length>0)
+        {
+            int i = 0;
+            while ( i < occupants.length && !isKiwi ) {
+                Occupant occupant = occupants[i];
+                isKiwi = occupant instanceof Kiwi ;
+                i++;
+            }
+    
+                    
+        }
+        return isKiwi;
+    } 
+    
     /************************************************************************************************************************
      * Mutator methods
     *************************************************************************************************************************/
@@ -273,6 +292,32 @@ public class Island
         }
         return predator;
     }
+     
+     /**
+     * Get the first kiwi that is in this position
+     * @param position which position
+     * @return kiwi or null if there is not one here.
+     */
+     public Kiwi getKiwi(Position position) 
+    {
+        GridSquare square = getGridSquare(position);
+        Occupant[] occupants = square.getOccupants();
+        Kiwi kiwi = null;
+        if(occupants.length>0)
+        {
+            int i = 0;
+            while ( i < occupants.length && (kiwi == null )) {
+                Occupant occupant = occupants[i];
+                if(occupant instanceof Kiwi)
+                {
+                    kiwi = (Kiwi) occupant;
+                }
+                i++;
+            }       
+        }
+        return kiwi;
+    }
+     
     /**
      * Produces a textual representation of the island on the console.
      * This exists  for debugging purposes during early development.

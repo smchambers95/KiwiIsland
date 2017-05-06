@@ -150,16 +150,6 @@ public class GameTest extends junit.framework.TestCase
     }
     
     @Test
-    public void testCanUseTrapValid(){
-        //Trap can be used if there is a predator here
-        Item valid = new Tool(playerPosition,"Trap", "A predator trap",1.0);
-        //Add predator
-        Predator rat = new Predator(playerPosition,"Rat", "A norway rat");
-        island.addOccupant(playerPosition, rat);
-        assertTrue("Should be able to use", game.canUse(valid));
-    }
-    
-    @Test
     public void testCanUseTrapNoPredator(){
         //Trap can be used if there is a predator here
         Item tool = new Tool(playerPosition,"Trap", "A predator trap",1.0);
@@ -266,7 +256,7 @@ public class GameTest extends junit.framework.TestCase
     }  
     
     @Test
-    public void testUseItemTrap(){
+    public void testDropTrapOnPredator(){
         Item trap = new Tool(playerPosition,"Trap", "Rat trap",1.0);
         player.collect(trap);
         assertTrue("Player should have trap",player.hasItem(trap));
@@ -274,9 +264,24 @@ public class GameTest extends junit.framework.TestCase
         // Can only use trap if there is a predator.
         Predator predator = new Predator(playerPosition,"Rat", "Norway rat");
         island.addOccupant(playerPosition, predator);
-        game.useItem(trap);
-        assertTrue("Player should still have trap",player.hasItem(trap));
+        game.dropItem(trap);
+        
+        assertFalse("Trap should be on ground",player.hasItem(trap));
         assertFalse("Predator should be gone.", island.hasPredator(playerPosition));
+    }
+    
+        @Test
+    public void testDropTrapOnKiwi(){
+        Item trap = new Tool(playerPosition,"Trap", "Rat trap",1.0);
+        player.collect(trap);
+        assertTrue("Player should have trap",player.hasItem(trap));
+        
+        // Can only use trap if there is a predator.
+        Kiwi kiwi = new Kiwi(playerPosition,"Kiwi", "Kiwi");
+        island.addOccupant(playerPosition, kiwi);
+        game.dropItem(trap);       
+        assertFalse("Trap should be on ground",player.hasItem(trap));
+        assertFalse("Kiwi should be gone.", island.hasKiwi(playerPosition));
     }
     
     @Test
@@ -433,14 +438,17 @@ public class GameTest extends junit.framework.TestCase
         //Now player needs to trap all predators
         //Predator 1
         boolean moveOK = playerMoveEast(5);
-        game.useItem(trap);
+        game.dropItem(trap);
+        game.collectItem(trap);
+        
         //Predator 2
         if(moveOK){
             moveOK = playerMoveWest(1);
         }
         if(moveOK){
             moveOK = playerMoveSouth(2);
-            game.useItem(trap);
+            game.dropItem(trap);
+            game.collectItem(trap);
         }
         //Predator 3
         if(moveOK){
@@ -448,7 +456,8 @@ public class GameTest extends junit.framework.TestCase
         }
         if(moveOK){
             moveOK = playerMoveSouth(1);
-            game.useItem(trap);
+            game.dropItem(trap);
+            game.collectItem(trap);
         }
         //Predator 4
         if(moveOK){
@@ -456,7 +465,8 @@ public class GameTest extends junit.framework.TestCase
         }
         if(moveOK){
             moveOK = playerMoveSouth(1);
-            game.useItem(trap);
+            game.dropItem(trap);
+            game.collectItem(trap);
         }
         //Predator 5
         if(moveOK){
@@ -464,7 +474,8 @@ public class GameTest extends junit.framework.TestCase
         }
         if(moveOK){
             moveOK = playerMoveSouth(1);
-            game.useItem(trap);
+            game.dropItem(trap);
+            game.collectItem(trap);
         }
          //Predator 6
         if(moveOK){
@@ -472,7 +483,8 @@ public class GameTest extends junit.framework.TestCase
         }
         if(moveOK){
             moveOK = playerMoveSouth(1);
-            game.useItem(trap);
+            game.dropItem(trap);
+            game.collectItem(trap);
         }
         //Predator 7
         if(moveOK){
@@ -483,7 +495,8 @@ public class GameTest extends junit.framework.TestCase
         }
         if(moveOK){
             moveOK = playerMoveSouth(4);
-            game.useItem(trap);
+            game.dropItem(trap);
+            game.collectItem(trap);
         }
         return moveOK;
     }

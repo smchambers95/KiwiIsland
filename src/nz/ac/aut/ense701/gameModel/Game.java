@@ -313,10 +313,10 @@ public class Game
             else if(itemToUse instanceof Tool)
             {
                 Tool tool = (Tool)itemToUse;
-                //Traps can only be used if there is a predator to catch
+                //Traps can only be dropped. A dropped trap is a set trap.
                 if(tool.isTrap())
                 {
-                    result = island.hasPredator(player.getPosition());
+                    result = false;
                 }
                 //Screwdriver can only be used if player has a broken trap
                 else if (tool.isScrewdriver() && player.hasTrap())
@@ -432,7 +432,17 @@ public class Game
                         updateGameState();
                     }
                 }
-            }
+                else if (item instanceof Tool)
+                {
+                    Tool tool = (Tool) item;
+                    //Kill predator or kiwi if trap is used when player is in same square
+                    if (tool.isTrap()&& !tool.isBroken())
+                    {
+                        activateTrap();    
+                    }
+                    updateGameState();
+                }
+            }          
             else
             {
                 // grid square is full: player has to take what back
@@ -465,11 +475,7 @@ public class Game
         else if (item instanceof Tool)
         {
             Tool tool = (Tool) item;
-            if (tool.isTrap()&& !tool.isBroken())
-            {
-                 success = trapPredator(); 
-            }
-            else if(tool.isScrewdriver())// Use screwdriver (to fix trap)
+            if(tool.isScrewdriver())// Use screwdriver (to fix trap)
             {
                 if(player.hasTrap())
                     {
@@ -620,13 +626,13 @@ public class Game
     }
         
     /**
-     * Trap a predator in this position
-     * @return true if predator trapped
+     * Check if player is dropping trap in same tile as a kiwi or predator, if so, kill them. 
      */
-    private boolean trapPredator()
+    private void activateTrap()
     {
         Position current= player.getPosition();
         boolean hadPredator = island.hasPredator(current);
+        boolean hadKiwi = island.hasKiwi(current);
         if(hadPredator) //can trap it
         {
             Occupant occupant = island.getPredator(current);
@@ -634,10 +640,14 @@ public class Game
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
         }
-        
-        return hadPredator;
+        if(hadKiwi)
+        {
+            Occupant occupant = island.getKiwi(current);
+            //Predator has been trapped so remove
+            island.removeOccupant(current, occupant);
+        }   
     }
-    
+            
     /**
      * Checks if the player has met a hazard and applies hazard impact.
      * Fatal hazards kill player and end game.
