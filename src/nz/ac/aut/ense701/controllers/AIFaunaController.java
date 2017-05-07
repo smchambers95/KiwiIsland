@@ -32,7 +32,7 @@ public class AIFaunaController extends Controller {
         // Run this thread will the thread isn't signaled for killing
         while(!kill){
             // If the controller is set to active run the navigation logic
-            if(active && game.getState() == GameState.PLAYING){
+            if(active && game.getState() == GameState.PLAYING && occupant != null){
                 Fauna fauna = (Fauna) occupant;
                 // User a random integer to decide what direction to move in
                 int direction = rnd.nextInt(5);

@@ -6,7 +6,7 @@ package nz.ac.aut.ense701.gameModel;
  * @author AS
  * @version July 2011
  */
-public class Kiwi  extends Item
+public class Kiwi extends Item
 {
     private static final double KIWI_WEIGHT = 3.0;
     

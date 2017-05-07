@@ -570,7 +570,18 @@ public class Game
             // update the faunas position on the island
             island.updateFaunaPosition(fauna, oldPosition);
             successfulMove = true;
-
+            
+            // if the resulting move places a predator and a kiwi in the same square induce the kill logic
+            if(fauna instanceof Predator && island.hasKiwi(newPosition)){
+                // Since there might be more than one Kiwi in the new position, get all occupants and kill all that are Kiwi's
+                for(Occupant occupant : island.getOccupants(newPosition)){
+                    if(occupant instanceof Kiwi){
+                        ((Kiwi)occupant).kill();
+                        deadKiwis++;
+                    }
+                }
+            }
+                
             updateGameState();            
         }
         return successfulMove;
@@ -641,9 +652,15 @@ public class Game
             }
         }
         
-        if(state != GameState.PLAYING)
-            for(Controller controller : faunaControllers)
-                controller.killController();
+        if(state != GameState.PLAYING){
+            Object[] tmpControllers = faunaControllers.toArray();
+            // not using an inhanced for loop here because threads will be closing messing up the iteration
+            for(int i = 0; i < tmpControllers.length; i++){
+                if(tmpControllers[i] != null)
+                    ((Controller)tmpControllers[i]).killController();
+            }
+            faunaControllers.clear();
+        }                
         
         // notify listeners about changes
         notifyGameEventListeners();
@@ -899,6 +916,10 @@ public class Game
             else if ( occType.equals("P") )
             {
                 occupant = new Predator(occPos, occName, occDesc);
+                AIFaunaController controller = new AIFaunaController(this, (Fauna)occupant, true);
+                Thread thread = new Thread(controller);
+                thread.start();
+                faunaControllers.add(controller);
                 totalPredators++;
             }
             else if ( occType.equals("F") )
