@@ -27,7 +27,7 @@ public class GridSquare
     public GridSquare(Terrain terrain) 
     {
         this.terrain   = terrain;
-        this.explored  = false;
+        this.explored  = true;
         this.visible   = false;
         this.occupants = new HashSet<Occupant>(); 
         this.player    = null;        

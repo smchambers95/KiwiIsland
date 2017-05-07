@@ -113,17 +113,29 @@ public class KiwiCountUI
         txtKiwisSaved.setText(Integer.toString(game.getSavedKiwisCount()) + "/" + game.getTotalKiwis());
         
         // update inventory list
+        Object oldSelection = listInventory.getSelectedValue();
         listInventory.setListData(game.getPlayerInventory());
-        listInventory.clearSelection();
-        listInventory.setToolTipText(null);
-        btnUse.setEnabled(false);
-        btnDrop.setEnabled(false);
+        // If something that was selected before is no longer in the list (dropped or used), disable tooltips, use button and drop button
+        if(oldSelection == null)
+        {
+            listInventory.setToolTipText(null);
+            btnUse.setEnabled(false);
+            btnDrop.setEnabled(false);
+        }
+        else
+            listInventory.setSelectedValue(oldSelection, true);
         
         // update list of visible objects
+        oldSelection = listObjects.getSelectedValue();
         listObjects.setListData(game.getOccupantsPlayerPosition());
-        listObjects.clearSelection();
-        listObjects.setToolTipText(null);
-        btnCollect.setEnabled(false);
+        listObjects.setSelectedValue(oldSelection, true);
+        // If something that was selected before is no longer in the list (moved), disable tooltips and the collect button
+        if(listObjects.getSelectedValue() == null)
+        {
+            listObjects.setToolTipText(null);
+            btnCollect.setEnabled(false);
+        } 
+            
         
         // update movement buttons
         btnMoveNorth.setEnabled(game.isPlayerMovePossible(MoveDirection.NORTH));

@@ -10,9 +10,7 @@ package nz.ac.aut.ense701.gameModel;
  * @version July 2011
  */
 public class Fauna extends Occupant
-{
-    
-
+{   
     /**
      * Constructor for objects of class Endangered
      * @param pos the position of the kiwi
@@ -22,11 +20,21 @@ public class Fauna extends Occupant
     public Fauna(Position pos, String name, String description) 
     {
         super(pos, name, description);
-    } 
+    }
+
+    /**
+     * Moves the player over terrain to a new position.
+     * 
+     * @param newPosition the new position of the player
+     * @param terrain the terrain to move over
+     */
+    public void moveToPosition(Position newPosition, Terrain terrain)
+    {
+        if( (position == null) || (terrain == null) )
+            throw new IllegalArgumentException("Null parameters");
+        this.position = newPosition;
+    }
     
- 
-
-
     @Override
     public String getStringRepresentation() 
     {

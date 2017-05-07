@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.Set;
+import nz.ac.aut.ense701.controllers.AIFaunaController;
+import nz.ac.aut.ense701.controllers.Controller;
 
 /**
  * This is the class that knows the Kiwi Island game rules and state
@@ -44,6 +46,7 @@ public class Game
      */
     public void createNewGame()
     {
+        faunaControllers = new HashSet<Controller>();
         totalPredators = 0;
         totalKiwis = 0;
         predatorsTrapped = 0;
@@ -119,7 +122,7 @@ public class Game
      * Checks if possible to move the player in the specified direction.
      * 
      * @param direction the direction to move
-     * @return true if the move was successful, false if it was an invalid move
+     * @return if the move is possible returns true, otherwise it will return false
      */
     public boolean isPlayerMovePossible(MoveDirection direction)
     {
@@ -131,14 +134,44 @@ public class Game
         {
             // what is the terrain at that new position?
             Terrain newTerrain = island.getTerrain(newPosition);
-            // can the playuer do it?
+            // can the player do it?
             isMovePossible = player.hasStaminaToMove(newTerrain) && 
                              player.isAlive();
         }
         return isMovePossible;
     }
     
-      /**
+    /**
+     * Check if the given Fauna instance is able to move in the specified direction
+     * 
+     * @param fauna the instance of the Fauna that wants to move
+     * @param direction the direction in which the Fauna wants to move
+     * @return if the move is possible returns true, otherwise it will return false 
+     */
+    public boolean isFaunaMovePossible(Fauna fauna, MoveDirection direction)
+    {
+        boolean isMovePossible = false;
+        // what position is the fauna moving to?
+        Position newPosition = fauna.getPosition().getNewPosition(direction);
+        
+        // Check that the new postion is a valid location for fauna
+        if((newPosition != null) && newPosition.isOnIsland())
+        {
+            Terrain newTerrain = island.getTerrain(newPosition);
+            if(newTerrain.getStringRepresentation() == "S")
+                return false;
+            // Check if there are hazards
+            for (Occupant occupant : island.getOccupants(newPosition))
+                if (occupant instanceof Hazard)
+                   return false;
+            // All checks have passed, the move is valid
+            return true;
+        }
+        // Move is not valid
+        return false;
+    }
+    
+    /**
      * Get terrain for position
      * @param row
      * @param column
@@ -516,7 +549,32 @@ public class Game
         return successfulMove;
     }
     
-    
+    /**
+     * Attempts to move a fauna instance in the specified direction
+     * 
+     * @param fauna the instance of the fauna that desires to move
+     * @param direction the direction to move
+     * @return will return true if the move was successful, false if it was an invalid move
+     */
+    public boolean faunaMove(Fauna fauna, MoveDirection direction)
+    {
+        boolean successfulMove = false;
+        if (isFaunaMovePossible(fauna, direction))
+        {
+            Position oldPosition = fauna.getPosition();
+            Position newPosition = fauna.getPosition().getNewPosition(direction);
+            Terrain terrain = island.getTerrain(newPosition);
+
+            // move the fauna instance to new position
+            fauna.moveToPosition(newPosition, terrain);
+            // update the faunas position on the island
+            island.updateFaunaPosition(fauna, oldPosition);
+            successfulMove = true;
+
+            updateGameState();            
+        }
+        return successfulMove;
+    }
     
     /**
      * Adds a game event listener.
@@ -548,7 +606,7 @@ public class Game
      */
     private void updateGameState()
     {
-         String message = "";
+        String message;
         if ( !player.isAlive() )
         {
             state = GameState.LOST;
@@ -582,8 +640,13 @@ public class Game
                 this.setWinMessage(message);
             }
         }
+        
+        if(state != GameState.PLAYING)
+            for(Controller controller : faunaControllers)
+                controller.killController();
+        
         // notify listeners about changes
-            notifyGameEventListeners();
+        notifyGameEventListeners();
     }
     
        
@@ -624,7 +687,7 @@ public class Game
                 || isPlayerMovePossible(MoveDirection.EAST) || isPlayerMovePossible(MoveDirection.WEST));
 
     }
-        
+    
     /**
      * Check if player is dropping trap in same tile as a kiwi or predator, if so, kill them. 
      */
@@ -841,6 +904,10 @@ public class Game
             else if ( occType.equals("F") )
             {
                 occupant = new Fauna(occPos, occName, occDesc);
+                AIFaunaController controller = new AIFaunaController(this, (Fauna)occupant, true);
+                Thread thread = new Thread(controller);
+                thread.start();
+                faunaControllers.add(controller);
             }
             if ( occupant != null ) island.addOccupant(occPos, occupant);
         }
@@ -855,6 +922,7 @@ public class Game
     private int totalKiwis;
     private int predatorsTrapped;
     private int deadKiwis;
+    private Set<Controller> faunaControllers;
     private Set<GameEventListener> eventListeners;
         
     private String winMessage = "";

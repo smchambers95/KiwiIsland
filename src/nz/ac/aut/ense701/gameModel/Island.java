@@ -222,6 +222,20 @@ public class Island
         previousPlayerPos = position;
     }
     
+    /**
+     * This will update the faunas new position on the island
+     * 
+     * @param fauna the fauna instance that has moved
+     * @param oldPosition the faunas old position so we can remove it from the old gridsquare
+     */
+    public void updateFaunaPosition(Fauna fauna, Position oldPosition)
+    {
+        // Remove the fauna from it's previous square
+        getGridSquare(oldPosition).removeOccupant(fauna);
+        
+        // Add the fauna to the new square
+        getGridSquare(fauna.getPosition()).addOccupant(fauna);
+    }
     
     /**
      * Attempts to add an occupant to a specified position on the island.

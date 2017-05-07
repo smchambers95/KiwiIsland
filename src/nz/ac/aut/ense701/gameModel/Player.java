@@ -11,12 +11,10 @@ import java.util.HashSet;
  * @author AS
  * @version July 2011
  */
-public class Player 
+public class Player extends Occupant
 {
     public static final double MOVE_STAMINA = 1.0;
     
-    private Position  position;
-    private final String    name;
     private final double    maxStamina;
     private double    stamina;
     private boolean   alive;
@@ -34,36 +32,17 @@ public class Player
     public Player(Position position, String name, double maxStamina,
                   double maxBackpackWeight)
     {
-       this.position          = position;
-       this.name              = name;
-       this.maxStamina        = maxStamina;
-       this.stamina = maxStamina;
-       this.maxBackpackWeight = maxBackpackWeight;
-       this.alive = true;
-       this.backpack = new HashSet<Item>();
+        super(position, name, "Player");
+        this.maxStamina        = maxStamina;
+        this.stamina = maxStamina;
+        this.maxBackpackWeight = maxBackpackWeight;
+        this.alive = true;
+        this.backpack = new HashSet<Item>();
     }   
     
     /*****************************************************************************************************
      * Accessor methods
      ****************************************************************************************************/
-    
-    /**
-     * Gets the name of the player.
-     * @return the name of the player
-     */
-    public String getName()
-    {
-        return this.name;
-    }
-    
-    /**
-     * Gets the current position of the player.
-     * @return the current position of the player
-     */
-    public Position getPosition()
-    {
-        return position;
-    }
     
     /**
      * Checks if Player is still alive
@@ -310,7 +289,7 @@ public class Player
     /**
      * Moves the player over terrain to a new position.
      * 
-     * @param position the new position of the player
+     * @param newPosition the new position of the player
      * @param terrain the terrain to move over
      */
     public void moveToPosition(Position newPosition, Terrain terrain)
@@ -325,5 +304,10 @@ public class Player
             this.position = newPosition;
             reduceStamina(getStaminaNeededToMove(terrain));
         }
+    }
+
+    @Override
+    public String getStringRepresentation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

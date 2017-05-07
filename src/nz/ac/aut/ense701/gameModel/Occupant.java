@@ -9,9 +9,9 @@ package nz.ac.aut.ense701.gameModel;
  */
 public abstract class Occupant 
 {
-    private Position position;
-    private final String   name;
-    private final String   description;    
+    protected Position position;
+    protected final String   name;
+    protected final String   description;    
 
     /**
      * Construct an occupant for a known position & name.
