@@ -161,7 +161,25 @@ public class Island
         return isPredator;
     } 
     
-     public boolean hasKiwi(Position position) 
+    public boolean hasTrap(Position position)
+    {
+        GridSquare square = getGridSquare(position);
+        Occupant[] occupants = square.getOccupants();
+        boolean isTrap = false;
+        if(occupants.length>0)
+        {
+            int i = 0;
+            while ( i < occupants.length && !isTrap ) {
+                Occupant occupant = occupants[i];
+                if(occupant instanceof Tool && ((Tool)occupant).isTrap())
+                    return true;
+                i++;
+            }       
+        }
+        return isTrap;
+    }
+    
+    public boolean hasKiwi(Position position) 
     {
         GridSquare square = getGridSquare(position);
         Occupant[] occupants = square.getOccupants();

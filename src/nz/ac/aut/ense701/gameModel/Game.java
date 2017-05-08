@@ -158,7 +158,7 @@ public class Game
         if((newPosition != null) && newPosition.isOnIsland())
         {
             Terrain newTerrain = island.getTerrain(newPosition);
-            if(newTerrain.getStringRepresentation() == "S")
+            if(newTerrain.getStringRepresentation().equals("S"))
                 return false;
             // Check if there are hazards
             for (Occupant occupant : island.getOccupants(newPosition))
@@ -585,14 +585,18 @@ public class Game
             island.updateFaunaPosition(fauna, oldPosition);
             successfulMove = true;
             
-            // if the resulting move places a predator and a kiwi in the same square induce the kill logic
-            if(fauna instanceof Predator && island.hasKiwi(newPosition)){
-                // Since there might be more than one Kiwi in the new position, get all occupants and kill all that are Kiwi's
+            // If the fauna that is moving is a predator check if there are kill conditions from the resulting move
+            if(fauna instanceof Predator){
                 for(Occupant occupant : island.getOccupants(newPosition)){
+                    // If a Kiwi is in the same square kill it
                     if(occupant instanceof Kiwi){
                         ((Kiwi)occupant).kill();
                         deadKiwis++;
                     }
+                    // If a trap is in the same square kill the predator
+                    else if(occupant instanceof Tool && ((Tool)occupant).isTrap()){
+                        island.removeOccupant(newPosition, fauna);
+                    }  
                 }
             }
                 
@@ -667,12 +671,8 @@ public class Game
         }
         
         if(state != GameState.PLAYING){
-            Object[] tmpControllers = faunaControllers.toArray();
-            // not using an inhanced for loop here because threads will be closing messing up the iteration
-            for(int i = 0; i < tmpControllers.length; i++){
-                if(tmpControllers[i] != null)
-                    ((Controller)tmpControllers[i]).killController();
-            }
+            for (Controller controller : faunaControllers)
+                controller.killController();
             faunaControllers.clear();
         }                
         

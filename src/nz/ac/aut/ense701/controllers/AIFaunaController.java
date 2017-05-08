@@ -53,13 +53,13 @@ public class AIFaunaController extends Controller {
                         // Take this as a choice not to move at all
                         break;
                 }  
-                
-                // Tell the thread to go to sleep (give delay between fauna movement)
-                try {
-                    Thread.sleep(rnd.nextInt(MAX_COOLDOWN - MIN_COOLDOWN) + MIN_COOLDOWN);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(AIFaunaController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            }
+            
+            // Tell the thread to go to sleep (give delay between fauna movement)
+            try {
+                Thread.sleep(rnd.nextInt(MAX_COOLDOWN - MIN_COOLDOWN) + MIN_COOLDOWN);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AIFaunaController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
