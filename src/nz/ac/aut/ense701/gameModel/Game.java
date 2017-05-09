@@ -459,7 +459,12 @@ public class Game
                 
                 // If the item was a kiwi, check whether or not it was dropped in a safe zone
                 if(item instanceof Kiwi){
-                    if(island.getTerrain(player.getPosition()).getStringRepresentation().equals("S")){
+                    if(island.hasTrap(player.getPosition())){
+                        ((Kiwi)item).kill();
+                        deadKiwis++;
+                        updateGameState();
+                    }
+                    else if(island.getTerrain(player.getPosition()).getStringRepresentation().equals("S")){
                         ((Kiwi) item).setSafe(true);
                         savedKiwiCount++;
                         updateGameState();
