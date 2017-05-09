@@ -404,7 +404,7 @@ public class GameTest extends junit.framework.TestCase
         game.collectItem(kiwi);
         
         // Need to move to the safezone
-        assertTrue (" This move valid", playerMoveEast(7));
+        assertTrue ("This move valid", playerMoveEast(7));
         
         // Drop the Kiwi in the safezone
         game.dropItem(kiwi);
@@ -412,6 +412,37 @@ public class GameTest extends junit.framework.TestCase
         assertEquals("Wrong saved count", game.getSavedKiwisCount(), 1);
     }
 
+    @Test
+    public void testKiwiDeathByDroppingTrapOnKiwi() {
+        // Place a Kiwi on the square below
+        Kiwi kiwi = new Kiwi(playerPosition, "Kiwi", "Kiwi");
+        island.addOccupant(playerPosition, kiwi);
+        
+        // Give the player a trap
+        Tool trap = new Tool(playerPosition,"Trap", "Rat trap",1.0);
+        game.collectItem(trap);
+        game.dropItem(trap);
+        
+        // Kiwi should now be dead
+        assertTrue("Kiwi should have died", kiwi.isDead());
+    }
+    
+    @Test
+    public void testKiwiDeathByDroppingKiwiOnTrap() {
+        // Give the player a trap
+        Tool trap = new Tool(playerPosition,"Trap", "Rat trap",1.0);
+        game.collectItem(trap);
+        game.dropItem(trap);
+        
+        // Drop a Kiwi on the recently dropped trap
+        Kiwi kiwi = new Kiwi(playerPosition, "Kiwi", "Kiwi");
+        game.collectItem(kiwi);
+        game.dropItem(kiwi);
+        
+        // Kiwi should now be dead
+        assertTrue("Kiwi should have died", kiwi.isDead());
+    }
+    
     @Test
     public void testOneTrapPerSquare()
     {

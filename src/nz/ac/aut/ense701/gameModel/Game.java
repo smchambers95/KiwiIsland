@@ -436,7 +436,6 @@ public class Game
         }      
         return success;
     } 
-
     
     /**
      * Drops what from the player's backpack.
@@ -729,23 +728,19 @@ public class Game
      */
     private void activateTrap()
     {
-        Position current= player.getPosition();
-        boolean hadPredator = island.hasPredator(current);
-        boolean hadKiwi = island.hasKiwi(current);
-        if(hadPredator) //can trap it
-        {
-            Occupant occupant = island.getPredator(current);
-            //Predator has been trapped so remove
-            island.removeOccupant(current, occupant); 
-            predatorsTrapped++;
+        Position currentPosition = player.getPosition();
+        
+        for(Occupant occupant : island.getOccupants(currentPosition)){
+            if(occupant instanceof Predator){
+                island.removeOccupant(currentPosition, occupant); 
+                predatorsTrapped++;
+            }
+            else if(occupant instanceof Kiwi){
+                ((Kiwi) occupant).kill();
+                island.removeOccupant(currentPosition, occupant); 
+                deadKiwis++;
+            }
         }
-        if(hadKiwi)
-        {
-            Occupant occupant = island.getKiwi(current);
-            //Predator has been trapped so remove
-            island.removeOccupant(current, occupant);
-            deadKiwis++;
-        }   
     }
             
     /**

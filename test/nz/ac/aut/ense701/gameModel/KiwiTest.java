@@ -45,7 +45,7 @@ public class KiwiTest {
         assertTrue("Should  be saved", kiwi.saved());
     }
     
-     @Test
+    @Test
     public void testKiwiKillable() {
         assertFalse("Should not be dead", kiwi.isDead());
         kiwi.kill();
