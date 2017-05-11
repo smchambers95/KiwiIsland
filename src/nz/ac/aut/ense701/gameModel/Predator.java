@@ -9,7 +9,8 @@ package nz.ac.aut.ense701.gameModel;
  */
 public class Predator extends Fauna
 {
-
+    private boolean dead;
+    
     /**
      * Constructor for objects of class Predator
      * @param pos the position of the predator object
@@ -19,10 +20,24 @@ public class Predator extends Fauna
     public Predator(Position pos, String name, String description) 
     {
         super(pos, name, description);
+        dead = false;
     } 
  
+    /**
+     * Allows checking of whether or not this predator is dead
+     * 
+     * @return will return true if the predator has died, false if alive 
+     */
+    public boolean isDead(){
+        return dead;
+    }
     
-
+    /**
+     * This function will kill the predator
+     */
+    public void kill(){
+        dead = true;
+    }
 
     @Override
     public String getStringRepresentation() 

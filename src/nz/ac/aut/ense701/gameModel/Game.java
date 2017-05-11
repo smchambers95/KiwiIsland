@@ -599,7 +599,9 @@ public class Game
                     }
                     // If a trap is in the same square kill the predator
                     else if(occupant instanceof Tool && ((Tool)occupant).isTrap()){
+                        ((Predator)fauna).kill();
                         island.removeOccupant(newPosition, fauna);
+                        predatorsTrapped++;
                     }  
                 }
             }
