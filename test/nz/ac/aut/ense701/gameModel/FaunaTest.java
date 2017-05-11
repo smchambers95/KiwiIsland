@@ -9,10 +9,12 @@ import static org.junit.Assert.*;
  * @version 2011
  */
 public class FaunaTest {
-    Island island = new Island(5,5);
-    Game game = new Game();
+    Game game;
+    Island island;
     
     public FaunaTest() {
+        game = new Game();
+        island = new Island(5,5);
     }
 
     /**
@@ -28,50 +30,50 @@ public class FaunaTest {
     }
     
     /**
-     * Test of Fauna movement towards North.
+     * Test that a Fauna instance can move North when valid to do so
      */
     @Test
     public void testFaunaMovementNorth(){
         Position position = new Position(island, 3,3);
-        Fauna instance = new Fauna(position, "Oystercatcher", " A nesting oystercatcher");
-        Boolean expResult = true;
-        Boolean result = game.isFaunaMovePossible(instance, MoveDirection.NORTH);
-        assertEquals(expResult, result);
+        Fauna fauna = new Fauna(position, "Heron", "An active Heron");
+        game.faunaMove(fauna, MoveDirection.NORTH);
+        position.equals(fauna.position);
+        assertFalse(fauna.position.getColumn() > position.getColumn());
     }
     
     /**
-     * Test of Fauna movement towards South.
+     * Test that a Fauna instance can move South when valid to do so
      */
     @Test
     public void testFaunaMovementSouth(){
         Position position = new Position(island, 3,3);
-        Fauna instance = new Fauna(position, "Oystercatcher", " A nesting oystercatcher");
-        Boolean expResult = true;
-        Boolean result = game.isFaunaMovePossible(instance, MoveDirection.SOUTH);
-        assertEquals(expResult, result);
+        Fauna fauna = new Fauna(position, "Heron", "An active Heron");
+        game.faunaMove(fauna, MoveDirection.SOUTH);
+        position.equals(fauna.position);
+        assertFalse(fauna.position.getColumn() < position.getColumn());
     }
     
     /**
-     * Test of Fauna movement towards West.
+     * Test that a Fauna instance can move West when valid to do so
      */
     @Test
     public void testFaunaMovementWest(){
         Position position = new Position(island, 3,3);
-        Fauna instance = new Fauna(position, "Oystercatcher", " A nesting oystercatcher");
-        Boolean expResult = true;
-        Boolean result = game.isFaunaMovePossible(instance, MoveDirection.WEST);
-        assertEquals(expResult, result);
+        Fauna fauna = new Fauna(position, "Heron", "An active Heron");
+        game.faunaMove(fauna, MoveDirection.WEST);
+        position.equals(fauna.position);
+        assertFalse(fauna.position.getColumn() > position.getColumn());
     }
     
     /**
-     * Test of Fauna movement towards East.
+     * Test that a Fauna instance can move East when valid to do so
      */
     @Test
     public void testFaunaMovementEast(){
         Position position = new Position(island, 3,3);
-        Fauna instance = new Fauna(position, "Oystercatcher", " A nesting oystercatcher");
-        Boolean expResult = true;
-        Boolean result = game.isFaunaMovePossible(instance, MoveDirection.EAST);
-        assertEquals(expResult, result);
+        Fauna fauna = new Fauna(position, "Heron", "An active Heron");
+        game.faunaMove(fauna, MoveDirection.EAST);
+        position.equals(fauna.position);
+        assertFalse(fauna.position.getColumn() < position.getColumn());
     }
 }
