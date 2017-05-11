@@ -149,4 +149,23 @@ public class Position
         return newPosition;
     }
   
+    /**
+     * Provide a useful String representation of the position
+     * 
+     * @return will return a string representation of the Position
+     */
+    @Override
+    public String toString(){
+        return "(X: " + row + ", Y: " + column + ")";
+    }
+    
+    /**
+     * This method allows two Position objects to be checked for equality easily
+     * 
+     * @param pos the position to check against
+     * @return will return true if both positions are the same
+     */
+    public boolean equals(Position pos){
+        return (column == ((Position)pos).column && row == ((Position)pos).row);
+    }
 }

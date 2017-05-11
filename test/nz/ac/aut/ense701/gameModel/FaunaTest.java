@@ -14,7 +14,7 @@ public class FaunaTest {
     
     public FaunaTest() {
         game = new Game();
-        island = new Island(5,5);
+        island = game.getIsland();
     }
 
     /**
@@ -36,8 +36,8 @@ public class FaunaTest {
     public void testFaunaMovementNorth(){
         Position position = new Position(island, 3,3);
         Fauna fauna = new Fauna(position, "Heron", "An active Heron");
+        island.addOccupant(position, fauna);
         game.faunaMove(fauna, MoveDirection.NORTH);
-        position.equals(fauna.position);
         assertFalse(fauna.position.getColumn() > position.getColumn());
     }
     
@@ -48,8 +48,8 @@ public class FaunaTest {
     public void testFaunaMovementSouth(){
         Position position = new Position(island, 3,3);
         Fauna fauna = new Fauna(position, "Heron", "An active Heron");
+        island.addOccupant(position, fauna);
         game.faunaMove(fauna, MoveDirection.SOUTH);
-        position.equals(fauna.position);
         assertFalse(fauna.position.getColumn() < position.getColumn());
     }
     
@@ -60,8 +60,8 @@ public class FaunaTest {
     public void testFaunaMovementWest(){
         Position position = new Position(island, 3,3);
         Fauna fauna = new Fauna(position, "Heron", "An active Heron");
+        island.addOccupant(position, fauna);
         game.faunaMove(fauna, MoveDirection.WEST);
-        position.equals(fauna.position);
         assertFalse(fauna.position.getColumn() > position.getColumn());
     }
     
@@ -72,8 +72,51 @@ public class FaunaTest {
     public void testFaunaMovementEast(){
         Position position = new Position(island, 3,3);
         Fauna fauna = new Fauna(position, "Heron", "An active Heron");
+        island.addOccupant(position, fauna);
         game.faunaMove(fauna, MoveDirection.EAST);
-        position.equals(fauna.position);
         assertFalse(fauna.position.getColumn() < position.getColumn());
+    }
+    
+    /**
+     * This test will attempt to move a fauna onto the SAFE terrain (safe zone) it should not be able to move onto
+     */
+    @Test
+    public void testFaunaInvalidMoveToSafeZone() {
+        // Set the intended terrain for the fauna to move onto, into SAFE
+        Position safePosition = new Position(island, 2,3);
+        game.getIsland().setTerrain(safePosition, Terrain.SAFE);
+        
+        // Position and create the fauna
+        Position currentPosition = new Position(island, 3,3);
+        Fauna fauna = new Fauna(currentPosition, "Heron", "An active Heron");
+        game.getIsland().addOccupant(currentPosition, fauna);
+        
+        // Attempt to move the fauna to the SAFE terrain
+        game.faunaMove(fauna, MoveDirection.NORTH);
+        
+        // The fauna should not have moved position
+        assertTrue(fauna.position.equals(currentPosition));
+    }
+    
+    /**
+     * This test will attempt to move a fauna into a land hazard, which it should not be able to move into
+     */
+    @Test
+    public void testFaunaInvalidMoveToHazard() {
+        // Add a hazard to the gridsquare we intend on moving the fauna to
+        Position hazardPosition = new Position(island, 2,3);
+        Occupant hazard = new Hazard(hazardPosition, "Deep hole", "A very deep hole", 100);
+        game.getIsland().addOccupant(hazardPosition, hazard);
+        
+        // Position and create the fauna
+        Position currentPosition = new Position(island, 3,3);
+        Fauna fauna = new Fauna(currentPosition, "Heron", "An active Heron");
+        game.getIsland().addOccupant(currentPosition, fauna);
+        
+        // Attempt to move the fauna into the hazard
+        game.faunaMove(fauna, MoveDirection.NORTH);
+        
+        // The fauna should not have moved position
+        assertTrue(fauna.position.equals(currentPosition));
     }
 }
