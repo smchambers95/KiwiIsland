@@ -69,17 +69,6 @@ public class Island
         assert direction != null;
         return position.getNewPosition(direction);
     }
-    
-    /**
-     * Is this square visible
-     * @param position
-     * @return true if visible
-     */
-    public boolean isVisible(Position position)
-    {
-        GridSquare square = getGridSquare(position);
-        return square.isVisible();
-    }
      
     /**
      * Is this square explored
@@ -229,12 +218,6 @@ public class Island
         {
             getGridSquare(previousPlayerPos).setPlayer(null);
         }
-
-        // add visibility to all new adjacent squares
-        setVisible(position.getNewPosition(MoveDirection.NORTH));
-        setVisible(position.getNewPosition(MoveDirection.EAST ));
-        setVisible(position.getNewPosition(MoveDirection.SOUTH));
-        setVisible(position.getNewPosition(MoveDirection.WEST ));
 
         // remember the new player position
         previousPlayerPos = position;
@@ -418,18 +401,6 @@ public class Island
             }
         }
     }
-    
-        /**
-     * Private convenience method to change the visibility of grid squares.
-     * @param position the position to change
-     */
-    private void setVisible(Position position)
-    {
-        if ( (position != null) && position.isOnIsland() )
-        {
-            islandGrid[position.getRow()][position.getColumn()].setVisible();
-        }
-    } 
     
     /**
      * Get a grid square with a particular position.

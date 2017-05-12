@@ -59,23 +59,6 @@ public class GridSquareTest extends junit.framework.TestCase
     }
     
     @Test
-    public void testIsVisibleNewSquare() {
-        assertFalse( emptySquare.isVisible());
-    } 
-    
-    @Test
-    public void testIsExploredNewSquare() {
-        assertFalse( emptySquare.isExplored());
-    }
-    
-    
-    @Test
-    public void testSetVisible() {
-        emptySquare.setVisible();
-        assertTrue( emptySquare.isVisible());
-    } 
-    
-    @Test
     public void testsetExplored() {
         emptySquare.setExplored();
         assertTrue(emptySquare.isExplored());

@@ -113,29 +113,11 @@ public class IslandTest extends junit.framework.TestCase
     @Test
     public void testUpdatePlayerPosition(){
         Position newPos = new Position(testIsland, 2,3);
-        assertFalse(testIsland.isExplored(newPos));
         Player player = new Player(newPos ,"Ada Lovelace",25.0, 15.0);
         player.moveToPosition(newPos, Terrain.SAND);
-        
         testIsland.updatePlayerPosition(player);
         //new position should now be explored
-        assertTrue("Should be explored.", testIsland.isExplored(newPos));
-        //Surrounding positions should be visible
-        //North
-        Position north = new Position(testIsland,1,3);
-        assertTrue("Should be visible.", testIsland.isVisible(north));
-        
-        //South
-        Position south = new Position(testIsland,3,3);
-        assertTrue("Should be visible.", testIsland.isVisible(south));
-
-        //East
-        Position east = new Position(testIsland,2,2);
-        assertTrue("Should be visible.", testIsland.isVisible(east));
-        
-        //West
-        Position west = new Position(testIsland,2,4);
-        assertTrue("Should be visible.", testIsland.isVisible(west));
+        assertTrue("Should be in new position.", testIsland.hasPlayer(newPos));
     }
     
     @Test

@@ -372,27 +372,11 @@ public class GameTest extends junit.framework.TestCase
     }
     
     @Test
-    public void testPlayerMoveNonFatalHazardDead(){
-        Position hazardPosition = new Position(island, playerPosition.getRow()+1, playerPosition.getColumn());
-        Hazard fatal = new Hazard(hazardPosition, "Cliff", "Not so steep cliff", 0.5);
-        island.addOccupant(hazardPosition, fatal);
-        player.reduceStamina(47.0);
-        
-        assertTrue("Move valid", game.playerMove(MoveDirection.SOUTH));
-        //Non-fatal Hazard should reduce player stamina to less than zero
-        assertFalse("Player should not be alive.", player.isAlive());
-        assertTrue("Game should be over", game.getState()== GameState.LOST);
-        assertEquals("Wrong stamina", 0.0, player.getStaminaLevel());
-    }
-    
-    @Test
     public void testPlayerMoveNotEnoughStamina(){
         // Reduce player's stamina to less than is needed for the most challenging move
         //Most challenging move is WEST as Terrain is water
         player.reduceStamina(97.0);
         assertFalse("Player should not have required stamina", game.playerMove(MoveDirection.WEST));
-        //Game not over as there other moves player has enough stamina for
-        assertTrue("Game should not be over", game.getState()== GameState.PLAYING);
     }
     
     @Test

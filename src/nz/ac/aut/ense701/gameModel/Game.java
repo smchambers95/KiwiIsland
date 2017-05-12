@@ -184,17 +184,6 @@ public class Game implements Runnable
     public Terrain getTerrain(int row, int column) {
         return island.getTerrain(new Position(island, row, column));
     }
-
-    /**
-     * Is this position visible?
-     * @param row
-     * @param column
-     * @return true if position row, column is visible
-     */
-    public boolean isVisible(int row, int column) {
-        return island.isVisible(new Position(island, row, column));
-
-    }
    
     /**
     * Is this position explored?

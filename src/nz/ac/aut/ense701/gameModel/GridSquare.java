@@ -15,7 +15,6 @@ import java.util.Set;
 public class GridSquare 
 {
     private Terrain terrain;
-    private boolean visible;
     private boolean explored;
     private Player  player;
     private Set<Occupant> occupants;
@@ -27,8 +26,7 @@ public class GridSquare
     public GridSquare(Terrain terrain) 
     {
         this.terrain   = terrain;
-        this.explored  = true;
-        this.visible   = false;
+        this.explored  = false;
         this.occupants = new HashSet<Occupant>(); 
         this.player    = null;        
     }
@@ -54,19 +52,6 @@ public class GridSquare
     public boolean isExplored()
     {
         return this.explored;
-    }
-    
-    /**
-     * Check if this grid square is visible to the player.
-     * Squares are visible if they:
-     *      are visitable and adjacent to the player's current position
-     *      already explored by the player
-     * @return true is the grid square is visible to the player,
-     *         false if not.
-     */
-    public boolean isVisible()
-    {
-        return this.visible;
     }
 
     /**
@@ -150,14 +135,6 @@ public class GridSquare
     {
         this.explored = true;
     }  
-    
-    /**
-     * Marks this grid square as being visible to the player.
-     */
-    public void setVisible()
-    {
-        this.visible = true;
-    }
     
     /**
      * Sets the player on the grid square.
