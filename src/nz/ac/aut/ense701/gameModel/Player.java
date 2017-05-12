@@ -21,8 +21,6 @@ public class Player extends Occupant
     private boolean   alive;
     private Set<Item> backpack;
     private final double    maxBackpackWeight;
-
-    private long prvTime;
     
     /**
      * Constructs a new player object.
@@ -199,11 +197,15 @@ public class Player extends Occupant
      * Mutator methods
      ****************************************************************************************************************/
     
-    public void updateStamina()
+    /**
+     * This function should be repetitively called to update the players current stamina with the new recharged amount.
+     * This is calculated by the change in time multiplied by the stamina recharge rate
+     * 
+     * @param delta the change in time
+     */
+    public void updateStamina(long delta)
     {
-        long deltaTime = System.currentTimeMillis() - prvTime;
-        prvTime = System.currentTimeMillis();
-        increaseStamina(deltaTime * STAMINA_RECHARGE_RATE);
+        increaseStamina(delta * STAMINA_RECHARGE_RATE);
     }
     
     /**

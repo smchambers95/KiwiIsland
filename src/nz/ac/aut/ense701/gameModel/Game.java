@@ -647,10 +647,11 @@ public class Game implements Runnable
     {
         while(state == GameState.PLAYING)
         {
+            long delta = System.currentTimeMillis() - prvTime;
+            prvTime = System.currentTimeMillis();
+            
             if(player != null)
-            {
-                player.updateStamina();  
-            }
+                player.updateStamina(delta);  
             
             updateGameState();
             
@@ -660,7 +661,6 @@ public class Game implements Runnable
                 Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        System.out.println("Thread died");
     }
     
     /**
@@ -975,6 +975,7 @@ public class Game implements Runnable
     private int deadKiwis;
     private Set<Controller> faunaControllers;
     private Set<GameEventListener> eventListeners;
+    private long prvTime;
         
     private String winMessage = "";
     private String loseMessage  = "";
