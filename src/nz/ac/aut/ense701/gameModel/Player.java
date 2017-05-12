@@ -14,12 +14,15 @@ import java.util.HashSet;
 public class Player extends Occupant
 {
     public static final double MOVE_STAMINA = 1.0;
+    public static final double STAMINA_RECHARGE_RATE = 0.001;
     
     private final double    maxStamina;
     private double    stamina;
     private boolean   alive;
     private Set<Item> backpack;
     private final double    maxBackpackWeight;
+
+    private long prvTime;
     
     /**
      * Constructs a new player object.
@@ -195,6 +198,13 @@ public class Player extends Occupant
     /*************************************************************************************************************
      * Mutator methods
      ****************************************************************************************************************/
+    
+    public void updateStamina()
+    {
+        long deltaTime = System.currentTimeMillis() - prvTime;
+        prvTime = System.currentTimeMillis();
+        increaseStamina(deltaTime * STAMINA_RECHARGE_RATE);
+    }
     
     /**
      * Kills the Player

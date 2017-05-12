@@ -30,8 +30,7 @@ public class KiwiCountUI
     public KiwiCountUI(Game game) throws IOException, UnsupportedAudioFileException
     {
         assert game != null : "Make sure game object is created before UI";
-        this.game = game;
-        setAsGameListener();
+        this.game = game;  
         initComponents();
         initIslandGrid();
         update();
@@ -40,7 +39,7 @@ public class KiwiCountUI
         pnlIsland.addKeyListener(inputHandler);        
         listInventory.addKeyListener(inputHandler);
         listObjects.addKeyListener(inputHandler);
-        
+        setAsGameListener();
     }
     
     /**

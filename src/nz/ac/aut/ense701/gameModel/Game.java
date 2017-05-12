@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import nz.ac.aut.ense701.controllers.AIFaunaController;
 import nz.ac.aut.ense701.controllers.Controller;
 
@@ -20,7 +22,7 @@ import nz.ac.aut.ense701.controllers.Controller;
  * August 2011 Extended for stage 2. AS
  */
 
-public class Game
+public class Game implements Runnable
 {
     //Constants shared with UI to provide player data
     public static final int STAMINA_INDEX = 0;
@@ -58,9 +60,11 @@ public class Game
         winMessage = "";
         loseMessage = "";
         playerMessage = "";
+        Thread gameThread = new Thread(this);
+        gameThread.start();
         notifyGameEventListeners();
     }
-
+    
     /***********************************************************************************************************************
      * Accessor methods for game data
     ************************************************************************************************************************/
@@ -636,6 +640,30 @@ public class Game
      *********************************************************************************************************************************/
     
     /**
+     * The game can be run as a thread to allow things that need constant updates to be updated
+     */
+    @Override
+    public void run() 
+    {
+        while(state == GameState.PLAYING)
+        {
+            if(player != null)
+            {
+                player.updateStamina();  
+            }
+            
+            updateGameState();
+            
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        System.out.println("Thread died");
+    }
+    
+    /**
      * Used after player actions to update game state.
      * Applies the Win/Lose rules.
      */
@@ -652,12 +680,6 @@ public class Game
         {
             state = GameState.LOST;
             message = "Sorry, you have lost the game. A kiwi has been killed";
-            this.setLoseMessage(message);
-        }
-        else if(!playerCanMove())
-        {
-            state = GameState.LOST;
-            message = "Sorry, you have lost the game. You do not have sufficient stamina to move.";
             this.setLoseMessage(message);
         }
         else if(predatorsTrapped == totalPredators)
@@ -785,15 +807,8 @@ public class Game
             // Impact is a reduction in players energy by this % of Max Stamina
             double reduction = player.getMaximumStaminaLevel() * impact;
             player.reduceStamina(reduction);
-            // if stamina drops to zero: player is dead
-            if (player.getStaminaLevel() <= 0.0) {
-                player.kill();
-                this.setLoseMessage(" You have run out of stamina");
-            }
-            else // Let player know what happened
-            {
-                this.setPlayerMessage(hazard.getDescription() + " has reduced your stamina.");
-            }
+
+            this.setPlayerMessage(hazard.getDescription() + " has reduced your stamina.");
         }
     }
     
@@ -949,7 +964,6 @@ public class Game
             if ( occupant != null ) island.addOccupant(occPos, occupant);
         }
     }    
-
 
     private Island island;
     private Player player;
