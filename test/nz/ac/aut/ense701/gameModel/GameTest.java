@@ -333,7 +333,7 @@ public class GameTest extends junit.framework.TestCase
 
         assertTrue("Move valid", game.playerMove(MoveDirection.SOUTH));
         //Stamina reduced by move
-        assertEquals("Wrong stamina", stamina - 3, player.getStaminaLevel());
+        assertEquals("Wrong stamina", stamina - 2, player.getStaminaLevel());
         Position newPos = game.getPlayer().getPosition();
         assertEquals("Wrong position", newPos.getRow(), 1);
         assertFalse("Player should not be here", game.hasPlayer(playerPosition.getRow(), playerPosition.getColumn()));
@@ -374,7 +374,7 @@ public class GameTest extends junit.framework.TestCase
     public void testPlayerMoveNotEnoughStamina(){
         // Reduce player's stamina to less than is needed for the most challenging move
         //Most challenging move is WEST as Terrain is water
-        player.reduceStamina(97.0);
+        player.reduceStamina(99.0);
         assertFalse("Player should not have required stamina", game.playerMove(MoveDirection.WEST));
     }
     
@@ -384,10 +384,7 @@ public class GameTest extends junit.framework.TestCase
         // Pickup a Kiwi
         Kiwi kiwi = new Kiwi(playerPosition, "Kiwi", "Kiwi");
         island.addOccupant(playerPosition, kiwi);
-        game.collectItem(kiwi);
-        
-        // Need to move to the safezone
-        assertTrue ("This move valid", playerMoveEast(7));
+        game.collectItem(kiwi);       
         
         // Drop the Kiwi in the safezone
         game.dropItem(kiwi);
@@ -466,66 +463,28 @@ public class GameTest extends junit.framework.TestCase
         
         //Now player needs to trap all predators
         //Predator 1
-        boolean moveOK = playerMoveEast(5);
-
-        
+        boolean moveOK = playerMoveWest(2);
+       
+        if(moveOK){
+            game.dropItem(trap);
+            game.collectItem(trap);
+            moveOK = playerMoveSouth(4);
+        }
         //Predator 2
         if(moveOK){
-            moveOK = playerMoveWest(1);
-        }
-        if(moveOK){
-            moveOK = playerMoveSouth(2);
+            moveOK = playerMoveWest(3);
             game.dropItem(trap);
             game.collectItem(trap);
         }
         //Predator 3
         if(moveOK){
-            moveOK = playerMoveWest(2);
+            moveOK = playerMoveEast(4);
         }
         if(moveOK){
-            moveOK = playerMoveSouth(1);
+            moveOK = playerMoveSouth(2);
             game.dropItem(trap);
             game.collectItem(trap);
-        }
-        //Predator 4
-        if(moveOK){
-            moveOK = playerMoveWest(3);
-        }
-        if(moveOK){
-            moveOK = playerMoveSouth(1);
-            game.dropItem(trap);
-            game.collectItem(trap);
-        }
-        //Predator 5
-        if(moveOK){
-            moveOK = playerMoveEast(1);
-        }
-        if(moveOK){
-            moveOK = playerMoveSouth(1);
-            game.dropItem(trap);
-            game.collectItem(trap);
-        }
-         //Predator 6
-        if(moveOK){
-            moveOK = playerMoveEast(2);
-        }
-        if(moveOK){
-            moveOK = playerMoveSouth(1);
-            game.dropItem(trap);
-            game.collectItem(trap);
-        }
-        //Predator 7
-        if(moveOK){
-            moveOK = playerMoveNorth(1);
-        }
-        if(moveOK){
-            moveOK = playerMoveEast(3);
-        }
-        if(moveOK){
-            moveOK = playerMoveSouth(4);
-            game.dropItem(trap);
-            game.collectItem(trap);
-        }
+        }    
         return moveOK;
     }
     
