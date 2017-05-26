@@ -6,13 +6,13 @@ import nz.ac.aut.ense701.gameModel.Occupant;
 /**
  * @author Marc Tucker
  */
-public abstract class Controller implements Runnable{
+public abstract class AIController implements Runnable{
     protected Game game;
     protected Occupant occupant;
     protected boolean active;
     protected boolean kill;
     
-    public Controller(Game game, Occupant occupant, boolean active){
+    public AIController(Game game, Occupant occupant, boolean active){
         this.game = game;
         this.occupant = occupant;
         this.active = active;

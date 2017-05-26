@@ -9,8 +9,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import nz.ac.aut.ense701.controllers.AIFaunaController;
-import nz.ac.aut.ense701.controllers.Controller;
+import nz.ac.aut.ense701.controllers.AIPredatorController;
 
 /**
  * This is the class that knows the Kiwi Island game rules and state
@@ -48,7 +47,7 @@ public class Game implements Runnable
      */
     public void createNewGame()
     {
-        faunaControllers = new HashSet<Controller>();
+        predatorControllers = new HashSet<AIPredatorController>();
         totalPredators = 0;
         totalKiwis = 0;
         predatorsTrapped = 0;
@@ -688,9 +687,9 @@ public class Game implements Runnable
         }
         
         if(state != GameState.PLAYING){
-            for (Controller controller : faunaControllers)
+            for (AIPredatorController controller : predatorControllers)
                 controller.killController();
-            faunaControllers.clear();
+            predatorControllers.clear();
         }                
         
         // notify listeners about changes
@@ -936,19 +935,15 @@ public class Game implements Runnable
             else if ( occType.equals("P") )
             {
                 occupant = new Predator(occPos, occName, occDesc);
-                AIFaunaController controller = new AIFaunaController(this, (Fauna)occupant, true);
+                AIPredatorController controller = new AIPredatorController(this, (Fauna)occupant, true);
                 Thread thread = new Thread(controller);
                 thread.start();
-                faunaControllers.add(controller);
+                predatorControllers.add(controller);
                 totalPredators++;
             }
             else if ( occType.equals("F") )
             {
                 occupant = new Fauna(occPos, occName, occDesc);
-                AIFaunaController controller = new AIFaunaController(this, (Fauna)occupant, true);
-                Thread thread = new Thread(controller);
-                thread.start();
-                faunaControllers.add(controller);
             }
             if ( occupant != null ) island.addOccupant(occPos, occupant);
         }
@@ -962,7 +957,7 @@ public class Game implements Runnable
     private int totalKiwis;
     private int predatorsTrapped;
     private int deadKiwis;
-    private Set<Controller> faunaControllers;
+    private Set<AIPredatorController> predatorControllers;
     private Set<GameEventListener> eventListeners;
     private long prvTime;
         

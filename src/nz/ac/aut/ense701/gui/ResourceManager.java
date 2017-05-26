@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nz.ac.aut.ense701.gameModel;
+package nz.ac.aut.ense701.gui;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -18,7 +17,8 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import sun.audio.AudioStream;
+import nz.ac.aut.ense701.gameModel.Images;
+import nz.ac.aut.ense701.gameModel.Sounds;
 
 
 
@@ -28,20 +28,20 @@ import sun.audio.AudioStream;
  * @author Sean 
  */
 public class ResourceManager {
-    public HashMap<Images,BufferedImage> imageMap;
-    public HashMap<Sounds,Clip> soundMap;
+    private HashMap<Images,BufferedImage> textureMap;
+    private HashMap<Sounds,Clip> audioMap;
     
-    public Mixer mixer;
-    public Clip clip;
+    private Mixer mixer;
+    private Clip clip;
     
     BufferedImage img;
     File audioFile;
     
     
-    public ResourceManager() throws IOException, UnsupportedAudioFileException
+    public ResourceManager()
     {
-        imageMap  = new HashMap();
-        soundMap = new HashMap();
+        textureMap  = new HashMap();
+        audioMap = new HashMap();
         
         //Load in images first
         //Load Player, and fauna sprites.
@@ -75,12 +75,6 @@ public class ResourceManager {
         addSound(Sounds.SETTRAP, "../sounds/setTrapSound.wav");  
     }
     
-    //get clip from soundMap and play
-    public void playSound(Sounds soundName)
-    {   
-        soundMap.get(soundName).start();
-    }
-    
     //
     public void addSound(Sounds soundName, String soundFileURL)
     {
@@ -101,7 +95,7 @@ public class ResourceManager {
             clip.open(audioStream);  
             
             //Add sound clip to soundMap
-            soundMap.put(soundName, clip);
+            audioMap.put(soundName, clip);
         }
         catch(LineUnavailableException lue){
             System.out.println("Make sure the sound file you are reading in, is 16bit wav.");
@@ -110,5 +104,4 @@ public class ResourceManager {
         catch(UnsupportedAudioFileException uafe){uafe.printStackTrace();}
         catch(IOException ioe){ioe.printStackTrace();}
     }
-    
 }

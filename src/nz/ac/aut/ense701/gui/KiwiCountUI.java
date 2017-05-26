@@ -8,9 +8,8 @@ import javax.swing.JOptionPane;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameEventListener;
 import nz.ac.aut.ense701.gameModel.GameState;
-import nz.ac.aut.ense701.gameModel.InputHandler;
+import nz.ac.aut.ense701.controllers.PlayerController;
 import nz.ac.aut.ense701.gameModel.MoveDirection;
-import nz.ac.aut.ense701.gameModel.ResourceManager;
 
 /*
  * User interface form for Kiwi Island.
@@ -34,7 +33,7 @@ public class KiwiCountUI
         initComponents();
         initIslandGrid();
         update();
-        InputHandler inputHandler = new InputHandler(game);
+        PlayerController inputHandler = new PlayerController(game);
         pnlIsland.requestFocus(true);
         pnlIsland.addKeyListener(inputHandler);        
         listInventory.addKeyListener(inputHandler);
