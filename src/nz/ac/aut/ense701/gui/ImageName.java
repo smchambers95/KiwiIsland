@@ -3,16 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nz.ac.aut.ense701.gameModel;
+package nz.ac.aut.ense701.gui;
 
 /**
  *
- * @author Me
+ * @author Marc Tucker
  */
-public enum Sounds {
-    PICKUP,
-    WIN,
-    LOSE,
-    DROP,
-    SETTRAP
+public enum ImageName {
+    SAND,
+    FOREST,
+    WETLAND,
+    SCRUB,
+    ROCK,
+    WATER,
+    SAFE,
+    PLAYER,
+    UNKNOWN
 }

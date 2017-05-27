@@ -1,6 +1,9 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import nz.ac.aut.ense701.gameModel.Game;
@@ -18,15 +21,39 @@ public class GridSquarePanel extends javax.swing.JPanel
     /** 
      * Creates new GridSquarePanel.
      * @param game the game to represent
+     * @param resourceManager the resource manager which holds the assets to represent the game with
      * @param row the row to represent
      * @param column the column to represent
      */
-    public GridSquarePanel(Game game, int row, int column)
+    public GridSquarePanel(Game game, ResourceManager resourceManager, int row, int column)
     {
         this.game   = game;
         this.row    = row;
         this.column = column;
+        terrainImage = new StretchImage(null, resourceManager);
+        occupantsLabel = new JLabel("", SwingConstants.CENTER);
         initComponents();
+        setupLayout();
+    }
+    
+    private void setupLayout()
+    {
+        // Create and set the layout
+        SpringLayout layout = new SpringLayout();
+        setLayout(layout);
+        
+        layout.putConstraint(SpringLayout.WEST, terrainImage, 0, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.EAST, terrainImage, 0, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.NORTH, terrainImage, 0, SpringLayout.NORTH, this);
+        layout.putConstraint(SpringLayout.SOUTH, terrainImage, 0, SpringLayout.SOUTH, this);
+        
+        layout.putConstraint(SpringLayout.WEST, occupantsLabel, 0, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.EAST, occupantsLabel, 0, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.NORTH, occupantsLabel, 0, SpringLayout.NORTH, this);
+        layout.putConstraint(SpringLayout.SOUTH, occupantsLabel, 0, SpringLayout.SOUTH, this);
+        
+        add(occupantsLabel);
+        add(terrainImage);
     }
 
     /**
@@ -37,29 +64,28 @@ public class GridSquarePanel extends javax.swing.JPanel
         // get the GridSquare object from the world
         Terrain terrain   = game.getTerrain(row, column);
         
-        Color      color;
-        
+        // Create an ImageName to hold the enum of the image we should use
+        ImageName imageName;
         switch ( terrain )
         {
-            case SAND     : color = Color.YELLOW; break;
-            case FOREST   : color = Color.GREEN;  break;
-            case WETLAND : color = Color.BLUE; break;
-            case SCRUB : color = Color.DARK_GRAY;   break;
-            case WATER    : color = Color.CYAN;   break;
-            case SAFE : color = Color.RED;   break;
-            default  : color = Color.LIGHT_GRAY; break;
+            case SAND     : imageName = ImageName.SAND; break;
+            case FOREST   : imageName = ImageName.FOREST; break;
+            case WETLAND : imageName = ImageName.WETLAND; break;
+            case SCRUB : imageName = ImageName.SCRUB; break;
+            case WATER : imageName = ImageName.WATER; break;
+            case SAFE : imageName = ImageName.SAFE; break;
+            default  : imageName = ImageName.UNKNOWN; break;
         }
         
-            // Set the text of the JLabel according to the occupant
-            lblText.setText(game.getOccupantStringRepresentation(row,column));
-            // Set the colour. 
-            color = new Color(Math.min(255, color.getRed()   + 128), 
-                              Math.min(255, color.getGreen() + 128), 
-                              Math.min(255, color.getBlue()  + 128));
-            lblText.setBackground(color);
-            // set border colour according to 
-            // whether the player is in the grid square or not
-            setBorder(game.hasPlayer(row,column) ? activeBorder : normalBorder);
+        // Set the occupants label to what occupants are in this square
+        occupantsLabel.setText(game.getOccupantStringRepresentation(row,column));
+
+        // Set the name of the image the terrian should represent
+        terrainImage.setImageName(imageName);
+
+        // set border colour according to 
+        // whether the player is in the grid square or not
+        setBorder(game.hasPlayer(row,column) ? ACTIVE_BORDER : NORMAL_BORDER);
     }
     
     /** This method is called from within the constructor to
@@ -71,24 +97,28 @@ public class GridSquarePanel extends javax.swing.JPanel
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblText = new javax.swing.JLabel();
-
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        setLayout(new java.awt.BorderLayout());
 
-        lblText.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblText.setText("content");
-        lblText.setOpaque(true);
-        add(lblText, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 188, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 176, Short.MAX_VALUE)
+        );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel lblText;
     // End of variables declaration//GEN-END:variables
+    private final StretchImage terrainImage;
+    private final JLabel occupantsLabel;
     
-    private Game game;
-    private int row, column;
+    private final Game game;
+    private final int row;
+    private final int column;
     
-    private static final Border normalBorder = new LineBorder(Color.BLACK, 1);
-    private static final Border activeBorder = new LineBorder(Color.RED, 3);
+    private static final Border NORMAL_BORDER = new LineBorder(Color.BLACK, 1);
+    private static final Border ACTIVE_BORDER = new LineBorder(Color.RED, 3);
 }

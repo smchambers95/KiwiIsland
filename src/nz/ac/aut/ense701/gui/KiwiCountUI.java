@@ -2,8 +2,6 @@ package nz.ac.aut.ense701.gui;
 
 import java.awt.Component;
 import java.awt.GridLayout;
-import java.io.IOException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JOptionPane;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameEventListener;
@@ -26,10 +24,11 @@ public class KiwiCountUI
      * Creates a GUI for the KiwiIsland game.
      * @param game the game object to represent with this GUI.
      */
-    public KiwiCountUI(Game game) throws IOException, UnsupportedAudioFileException
+    public KiwiCountUI(Game game)
     {
         assert game != null : "Make sure game object is created before UI";
         this.game = game;  
+        resourceManager = new ResourceManager();
         initComponents();
         initIslandGrid();
         update();
@@ -556,7 +555,7 @@ public class KiwiCountUI
         {
             for ( int col = 0 ; col < columns ; col++ )
             {
-                pnlIsland.add(new GridSquarePanel(game, row, col));
+                pnlIsland.add(new GridSquarePanel(game, resourceManager, row, col));
             }
         }
     }
