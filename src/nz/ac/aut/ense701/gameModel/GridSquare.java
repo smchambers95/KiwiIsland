@@ -76,6 +76,10 @@ public class GridSquare
         {
             result += occupant.getStringRepresentation();
         }
+        if(player != null)
+        {
+            result += player.getStringRepresentation();
+        }
         return result;
     } 
     

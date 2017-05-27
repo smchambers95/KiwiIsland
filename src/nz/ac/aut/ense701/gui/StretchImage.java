@@ -41,14 +41,12 @@ public class StretchImage extends JLabel {
         super.paintComponent(g);
         if(imageName != null){
             if(resourceManager != null && resourceManager.containsImage(imageName)){ 
-                // Images are held in a HashMap so it's an Order 1 look up (not wasting performance)
+                // Images are held in a HashMap so it's an Order 1 look up (not wasting performance)   
                 Image image = resourceManager.getImage(imageName);
                 g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
             }
             else
                this.setText("Missing Image"); 
         } 
-        else
-           this.setText("No Image Set"); 
     }
 }

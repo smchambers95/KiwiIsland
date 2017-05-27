@@ -320,6 +320,6 @@ public class Player extends Occupant
 
     @Override
     public String getStringRepresentation() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "X";
     }
 }

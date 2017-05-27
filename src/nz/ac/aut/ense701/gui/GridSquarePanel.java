@@ -1,9 +1,7 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.Color;
-import javax.swing.JLabel;
 import javax.swing.SpringLayout;
-import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import nz.ac.aut.ense701.gameModel.Game;
@@ -30,8 +28,9 @@ public class GridSquarePanel extends javax.swing.JPanel
         this.game   = game;
         this.row    = row;
         this.column = column;
+        this.resourceManager = resourceManager;
         terrainImage = new StretchImage(null, resourceManager);
-        occupantsLabel = new JLabel("", SwingConstants.CENTER);
+        occupantsPanel = new OccupantsPanel(resourceManager);
         initComponents();
         setupLayout();
     }
@@ -41,18 +40,18 @@ public class GridSquarePanel extends javax.swing.JPanel
         // Create and set the layout
         SpringLayout layout = new SpringLayout();
         setLayout(layout);
-        
+               
         layout.putConstraint(SpringLayout.WEST, terrainImage, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.EAST, terrainImage, 0, SpringLayout.EAST, this);
         layout.putConstraint(SpringLayout.NORTH, terrainImage, 0, SpringLayout.NORTH, this);
         layout.putConstraint(SpringLayout.SOUTH, terrainImage, 0, SpringLayout.SOUTH, this);
         
-        layout.putConstraint(SpringLayout.WEST, occupantsLabel, 0, SpringLayout.WEST, this);
-        layout.putConstraint(SpringLayout.EAST, occupantsLabel, 0, SpringLayout.EAST, this);
-        layout.putConstraint(SpringLayout.NORTH, occupantsLabel, 0, SpringLayout.NORTH, this);
-        layout.putConstraint(SpringLayout.SOUTH, occupantsLabel, 0, SpringLayout.SOUTH, this);
+        layout.putConstraint(SpringLayout.WEST, occupantsPanel, 0, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.EAST, occupantsPanel, 0, SpringLayout.EAST, this);
+        layout.putConstraint(SpringLayout.NORTH, occupantsPanel, 0, SpringLayout.NORTH, this);
+        layout.putConstraint(SpringLayout.SOUTH, occupantsPanel, 0, SpringLayout.SOUTH, this);
         
-        add(occupantsLabel);
+        add(occupantsPanel);
         add(terrainImage);
     }
 
@@ -78,8 +77,8 @@ public class GridSquarePanel extends javax.swing.JPanel
         }
         
         // Set the occupants label to what occupants are in this square
-        occupantsLabel.setText(game.getOccupantStringRepresentation(row,column));
-
+        occupantsPanel.setOccupants(game.getOccupantStringRepresentation(row,column));
+        
         // Set the name of the image the terrian should represent
         terrainImage.setImageName(imageName);
 
@@ -113,9 +112,10 @@ public class GridSquarePanel extends javax.swing.JPanel
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     private final StretchImage terrainImage;
-    private final JLabel occupantsLabel;
+    private final OccupantsPanel occupantsPanel;
     
     private final Game game;
+    private final ResourceManager resourceManager;
     private final int row;
     private final int column;
     

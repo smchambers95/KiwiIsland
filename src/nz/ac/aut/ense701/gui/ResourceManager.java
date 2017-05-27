@@ -39,6 +39,8 @@ public class ResourceManager {
         addImage(ImageName.WATER, "textures/water-texture.png");
         addImage(ImageName.SAND, "textures/sand-texture.png");
         addImage(ImageName.SAFE, "textures/safe-texture.png");
+        addImage(ImageName.PLAYER, "textures/player-texture.png");
+        addImage(ImageName.UNKNOWN, "textures/unknown-texture.png");
     }
     
     private boolean addImage(ImageName imageName, String filePath)
