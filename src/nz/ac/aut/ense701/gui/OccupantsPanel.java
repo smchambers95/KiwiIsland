@@ -49,7 +49,7 @@ public class OccupantsPanel extends JPanel
      * This function handles updating what occupants this square should represent
      * @param occupantsRepresentation a string where every character represents an occupant
      */
-    public void setOccupants(String occupantsRepresentation) 
+    public synchronized void setOccupants(String occupantsRepresentation) 
     {
         for(int i = 0; i < occupantsRepresentation.length(); i++)
         {
@@ -75,8 +75,7 @@ public class OccupantsPanel extends JPanel
         if(occupantsRepresentation.length() < images.size()){
             // Remove in reverse order to avoid element shifting
             for(int i = images.size(); i > occupantsRepresentation.length(); i--){
-                if(this.getComponents().length > 0)
-                    this.remove(i - 1);
+                this.remove(i - 1);
                 images.remove(i - 1);
             }
         }
