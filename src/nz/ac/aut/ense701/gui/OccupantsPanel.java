@@ -65,8 +65,7 @@ public class OccupantsPanel extends JPanel
                 images.get(i).setImageName(imageName);
             else 
             {
-                FittedImage image = new FittedImage(imageName, resourceManager);
-                
+                FittedImage image = new FittedImage(imageName, resourceManager);  
                 images.add(image);
                 this.add(image);
             }        
@@ -76,7 +75,8 @@ public class OccupantsPanel extends JPanel
         if(occupantsRepresentation.length() < images.size()){
             // Remove in reverse order to avoid element shifting
             for(int i = images.size(); i > occupantsRepresentation.length(); i--){
-                this.remove(i - 1);
+                if(this.getComponents().length > 0)
+                    this.remove(i - 1);
                 images.remove(i - 1);
             }
         }
