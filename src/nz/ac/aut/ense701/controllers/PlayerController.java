@@ -53,6 +53,16 @@ public class PlayerController extends KeyAdapter{
                     keyStates.put("D", Boolean.TRUE);
                 }
                 break;
+            case KeyEvent.VK_E:
+                if(!keyStates.containsKey("E") || !keyStates.get("E")){
+                    //Collect pickupable item on ground
+                    if(game.getOccupantsPlayerPosition().length > 0)
+                    {
+                        game.collectItem(game.getOccupantsPlayerPosition()[0]);
+                    }
+                    keyStates.put("E", Boolean.TRUE);
+                }
+                break;
             default:
                 break;
         }
@@ -81,6 +91,11 @@ public class PlayerController extends KeyAdapter{
             case KeyEvent.VK_D:
                 if(!keyStates.containsKey("D") || keyStates.get("D")){
                     keyStates.put("D", Boolean.FALSE);
+                }
+                break;
+            case KeyEvent.VK_E:
+                if(!keyStates.containsKey("E") || keyStates.get("E")){
+                    keyStates.put("E", Boolean.FALSE);
                 }
                 break;
             default:
