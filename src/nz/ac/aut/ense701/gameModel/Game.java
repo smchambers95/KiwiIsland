@@ -3,7 +3,9 @@ package nz.ac.aut.ense701.gameModel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.Set;
@@ -53,6 +55,7 @@ public class Game implements Runnable
         predatorsTrapped = 0;
         savedKiwiCount = 0;
         deadKiwis = 0;
+        enoughStaminaToMove = true;
         initialiseIslandFromFile("IslandData.txt");
         drawIsland();
         state = GameState.PLAYING;
@@ -62,6 +65,7 @@ public class Game implements Runnable
         Thread gameThread = new Thread(this);
         gameThread.start();
         notifyGameEventListeners();
+        outputMessages = new ArrayList<String>();
     }
     
     /***********************************************************************************************************************
@@ -137,10 +141,17 @@ public class Game implements Runnable
         {
             // what is the terrain at that new position?
             Terrain newTerrain = island.getTerrain(newPosition);
+                      
             // can the player do it?
             isMovePossible = player.hasStaminaToMove(newTerrain) && 
                              player.isAlive();
-        }
+            
+            //Set enoughStamina so that we can check this scenario in MovePlayer to print out stamina is too low message
+            if(!player.hasStaminaToMove(newTerrain))
+                enoughStaminaToMove = false;
+            else
+                enoughStaminaToMove = true;   
+        }       
         return isMovePossible;
     }
     
@@ -395,6 +406,16 @@ public class Game implements Runnable
         return !("".equals(playerMessage));
     }
     
+    public ArrayList<String> getOutputMessages()
+    {
+        return (ArrayList<String>) outputMessages;
+    }
+    
+    public void clearMessages()
+    {
+        this.outputMessages.clear();
+    }
+    
     /***************************************************************************************************************
      * Mutator Methods
     ****************************************************************************************************************/
@@ -412,6 +433,7 @@ public class Game implements Runnable
         boolean success = (item instanceof Item) && (player.collect((Item)item));
         if(success)
         {
+            Item collectedItem = (Item) item;
             // player has picked up an item: remove from grid square
             island.removeOccupant(player.getPosition(), (Item)item);
             
@@ -420,9 +442,10 @@ public class Game implements Runnable
                 if(((Kiwi) item).saved()){
                     ((Kiwi) item).setSafe(false);
                     savedKiwiCount--;
+                    outputMessages.add("You remove a kiwi from the safe zone.");
                 }
             }
-            
+            outputMessages.add("You pick up a: "+collectedItem.getName()+".");
             // everybody has to know about the change
             notifyGameEventListeners();
         }      
@@ -453,13 +476,17 @@ public class Game implements Runnable
                     if(island.hasTrap(player.getPosition())){
                         ((Kiwi)item).kill();
                         deadKiwis++;
-                        updateGameState();
+                        outputMessages.add("You drop the kiwi on a trap. It dies.");
                     }
                     else if(island.getTerrain(player.getPosition()).getStringRepresentation().equals("S")){
                         ((Kiwi) item).setSafe(true);
-                        savedKiwiCount++;
-                        updateGameState();
+                        savedKiwiCount++;  
+                        outputMessages.add("You drop the kiwi in the safe zone.");
                     }
+                    else
+                        outputMessages.add("You drop the kiwi.");    
+                    
+                    updateGameState();       
                 }
                 else if (item instanceof Tool)
                 {
@@ -477,19 +504,34 @@ public class Game implements Runnable
                             }         
                         }
                         if(!trapExists)
-                            activateTrap();    
+                        {
+                            outputMessages.add("You set a trap.");
+                            activateTrap(); 
+                        }
                         else
+                        {
                             collectItem(tool);
+                            outputMessages.add("You already have a trap set there.");
+                        }
                     }
-                    
+                    else
+                    {
+                        //Drop other tool type
+                        outputMessages.add("You drop a: "+item);
+                    }
                     // Kill predator or kiwi if trap is used when player is in same square                              
                     updateGameState();
+                }
+                else
+                {
+                    outputMessages.add("You drop a: "+item);
                 }
             }          
             else
             {
                 // grid square is full: player has to take what back
-                player.collect(item);                     
+                player.collect(item);     
+                outputMessages.add("Cannot drop anymore items on current tile.");
             }
         }
         return success;
@@ -508,8 +550,10 @@ public class Game implements Runnable
         //Player east food to increase stamina
         {
             Food food = (Food) item;
+            
             // player gets energy boost from food
             player.increaseStamina(food.getEnergy());
+            outputMessages.add("You consume the "+food+" and feel replenished.");
             // player has consumed the food: remove from inventory
             player.drop(food);
             // use successful: everybody has to know that
@@ -524,6 +568,7 @@ public class Game implements Runnable
                     {
                         Tool trap = player.getTrap();
                         trap.fix();
+                        outputMessages.add("You fix the broken trap.");
                     }
             }
         }
@@ -553,9 +598,11 @@ public class Game implements Runnable
                     
             // Is there a hazard?
             checkForHazard();
-
             updateGameState();            
         }
+        else if(!enoughStaminaToMove)
+            outputMessages.add("You are out of breath, you need to rest before you can move again");
+
         return successfulMove;
     }
     
@@ -586,14 +633,16 @@ public class Game implements Runnable
                 for(Occupant occupant : island.getOccupants(newPosition)){
                     // If a Kiwi is in the same square kill it
                     if(occupant instanceof Kiwi){
+                        outputMessages.add("A predator has killed a kiwi.");  
                         ((Kiwi)occupant).kill();
-                        deadKiwis++;
+                        deadKiwis++;   
                     }
                     // If a trap is in the same square kill the predator
                     else if(occupant instanceof Tool && ((Tool)occupant).isTrap()){
                         ((Predator)fauna).kill();
                         island.removeOccupant(newPosition, fauna);
                         predatorsTrapped++;
+                        outputMessages.add("You have trapped a predator. Well done.");    
                     }  
                 }
             }
@@ -746,11 +795,13 @@ public class Game implements Runnable
             if(occupant instanceof Predator){
                 island.removeOccupant(currentPosition, occupant); 
                 predatorsTrapped++;
+                outputMessages.add("You have trapped a predator. Well done.");  
             }
             else if(occupant instanceof Kiwi){
+                 outputMessages.add("You set a trap on a kiwi. It dies.");
                 ((Kiwi) occupant).kill();
                 island.removeOccupant(currentPosition, occupant); 
-                deadKiwis++;
+                deadKiwis++;   
             }
         }
     }
@@ -779,6 +830,7 @@ public class Game implements Runnable
         if (hazard.isFatal()) 
         {
             player.kill();
+            outputMessages.add(hazard.getDescription() + " has killed you.");
             this.setLoseMessage(hazard.getDescription() + " has killed you.");
         } 
         else if (hazard.isBreakTrap()) 
@@ -786,6 +838,7 @@ public class Game implements Runnable
             Tool trap = player.getTrap();
             if (trap != null) {
                 trap.setBroken();
+                outputMessages.add("Sorry your predator trap is broken. You will need to find tools to fix it before you can use it again.");
                 this.setPlayerMessage("Sorry your predator trap is broken. You will need to find tools to fix it before you can use it again.");
             }
         } 
@@ -795,11 +848,10 @@ public class Game implements Runnable
             // Impact is a reduction in players energy by this % of Max Stamina
             double reduction = player.getMaximumStaminaLevel() * impact;
             player.reduceStamina(reduction);
-
+            outputMessages.add(hazard.getDescription() + " has reduced your stamina.");
             this.setPlayerMessage(hazard.getDescription() + " has reduced your stamina.");
         }
     }
-    
     
     /**
      * Notifies all game event listeners about a change.
@@ -964,4 +1016,7 @@ public class Game implements Runnable
     private String winMessage = "";
     private String loseMessage  = "";
     private String playerMessage  = "";   
+    
+    private List<String> outputMessages;
+    private boolean enoughStaminaToMove;
 }

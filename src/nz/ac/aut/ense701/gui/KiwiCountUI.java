@@ -38,6 +38,13 @@ public class KiwiCountUI
         listInventory.addKeyListener(inputHandler);
         listObjects.addKeyListener(inputHandler);
         setAsGameListener();
+        outputMessage = "Welcome to Kiwi Island!"
+                + "\n\nIt is your mission to save all the kiwis, trapping "
+                + "\nthe predators before they get to them first!"
+                + "\n\nYou can use W,S,A,D to move, and E to pick up items."
+                + "\nOther controls can be accessed via the right sidebar."
+                + "\n\nGood Luck!\n\n";
+        outputWindow.setText(outputMessage);
     }
     
     /**
@@ -138,9 +145,26 @@ public class KiwiCountUI
         btnMoveNorth.setEnabled(game.isPlayerMovePossible(MoveDirection.NORTH));
         btnMoveEast.setEnabled( game.isPlayerMovePossible(MoveDirection.EAST));
         btnMoveSouth.setEnabled(game.isPlayerMovePossible(MoveDirection.SOUTH));
-        btnMoveWest.setEnabled( game.isPlayerMovePossible(MoveDirection.WEST));
+        btnMoveWest.setEnabled( game.isPlayerMovePossible(MoveDirection.WEST)); 
+        
+        //Update message box
+        if(!game.getOutputMessages().isEmpty())
+        {
+            //For each message in the output messages
+            for(String message : game.getOutputMessages())
+            {
+                //concatenate that message to output message
+                outputMessage += message +"\n";
+            }     
+            //Once we have added the messages to the output message, we can delete them from the array in game.
+            game.clearMessages(); 
+            //finally set the output window message to the output message
+            outputWindow.setText(outputMessage);
+            //Set scroll bar to bottom so you can see latest output
+            outputWindow.setSelectionStart(outputMessage.length());
+        }
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -178,6 +202,7 @@ public class KiwiCountUI
         javax.swing.JScrollPane scrlObjects = new javax.swing.JScrollPane();
         listObjects = new javax.swing.JList();
         btnCollect = new javax.swing.JButton();
+        outputWindow = new java.awt.TextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kiwi Count");
@@ -189,11 +214,11 @@ public class KiwiCountUI
         pnlIsland.setLayout(pnlIslandLayout);
         pnlIslandLayout.setHorizontalGroup(
             pnlIslandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGap(0, 501, Short.MAX_VALUE)
         );
         pnlIslandLayout.setVerticalGroup(
             pnlIslandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 618, Short.MAX_VALUE)
+            .addGap(0, 568, Short.MAX_VALUE)
         );
 
         pnlContent.add(pnlIsland, java.awt.BorderLayout.CENTER);
@@ -485,6 +510,9 @@ public class KiwiCountUI
 
         pnlContent.add(pnlControls, java.awt.BorderLayout.EAST);
 
+        outputWindow.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        pnlContent.add(outputWindow, java.awt.BorderLayout.PAGE_END);
+
         getContentPane().add(pnlContent, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -571,13 +599,15 @@ public class KiwiCountUI
     private javax.swing.JLabel lblKiwisSaved;
     private javax.swing.JList listInventory;
     private javax.swing.JList listObjects;
+    private java.awt.TextArea outputWindow;
     private javax.swing.JPanel pnlIsland;
     private javax.swing.JProgressBar progBackpackWeight;
     private javax.swing.JProgressBar progPlayerStamina;
     private javax.swing.JLabel txtKiwisSaved;
     private javax.swing.JLabel txtPlayerName;
     // End of variables declaration//GEN-END:variables
-
+    
     private Game game;
     private ResourceManager resourceManager;
+    private String outputMessage;
 }
