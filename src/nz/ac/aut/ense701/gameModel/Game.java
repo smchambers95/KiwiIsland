@@ -449,6 +449,8 @@ public class Game implements Runnable
             // everybody has to know about the change
             notifyGameEventListeners();
         }      
+        else
+            outputMessages.add("Your backpack is full. You must drop items to make more room.");
         return success;
     } 
     
