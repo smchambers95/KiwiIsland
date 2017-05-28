@@ -24,5 +24,6 @@ public enum ImageName {
     BASKET,
     FAUNA,
     KIWI,
+    HAZARD,
     UNKNOWN
 }

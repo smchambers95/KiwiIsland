@@ -48,6 +48,7 @@ public class ResourceManager {
         addImage(ImageName.KIWI, "textures/kiwi-texture.png");
         addImage(ImageName.STOAT, "textures/stoat-texture.png");
         addImage(ImageName.POSSUM, "textures/possum-texture.png"); 
+        addImage(ImageName.HAZARD, "textures/hazard-texture.png");
     }
     
     private boolean addImage(ImageName imageName, String filePath)

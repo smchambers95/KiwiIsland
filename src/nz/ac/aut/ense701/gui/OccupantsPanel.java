@@ -61,6 +61,7 @@ public class OccupantsPanel extends JPanel
                 case 'K' : imageName = ImageName.KIWI; break;   
                 case 'E' : imageName = ImageName.BASKET; break;
                 case 'T' : imageName = ImageName.TRAP; break; 
+                case 'H' : imageName = ImageName.HAZARD; break;
                 default  : imageName = ImageName.UNKNOWN; break;
             }
             // If a StretchImage already exists use it, instead of making another (save performance)
