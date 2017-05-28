@@ -143,7 +143,7 @@ public class PlayerTest extends junit.framework.TestCase
     public void testhasStaminaToMoveNotEnoughStaminaForTerrain()
     {
         player.reduceStamina(23);
-        assertFalse(player.hasStaminaToMove(Terrain.SCRUB));
+        assertFalse(player.hasStaminaToMove(Terrain.ROCK));
     }
 
     @Test
@@ -287,7 +287,7 @@ public class PlayerTest extends junit.framework.TestCase
     {
         Position newPosition = new Position(island, 0,1);
         player.reduceStamina(23);
-        player.moveToPosition(newPosition, Terrain.SCRUB);
+        player.moveToPosition(newPosition, Terrain.ROCK);
         assertEquals(playerPosition, player.getPosition());
         assertEquals(2.0, player.getStaminaLevel(), 0.01);
     }

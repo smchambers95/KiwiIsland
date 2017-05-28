@@ -72,7 +72,7 @@ public class GridSquarePanel extends javax.swing.JPanel
             case SAND     : imageName = ImageName.SAND; break;
             case FOREST   : imageName = ImageName.FOREST; break;
             case WETLAND : imageName = ImageName.WETLAND; break;
-            case SCRUB : imageName = ImageName.SCRUB; break;
+            case ROCK : imageName = ImageName.ROCK; break;
             case WATER : imageName = ImageName.WATER; break;
             case SAFE : imageName = ImageName.SAFE; break;
             default  : imageName = ImageName.UNKNOWN; break;

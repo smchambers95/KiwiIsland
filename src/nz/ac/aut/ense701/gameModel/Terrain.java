@@ -14,7 +14,7 @@ public enum Terrain
     SAND(".", 1.0),
     FOREST("*", 2.0),
     WETLAND ("#", 2.5),
-    SCRUB("^", 3.0),
+    ROCK("^", 3.0),
     WATER("~", 4.0),
     SAFE("S", 0.0);
     

@@ -13,7 +13,6 @@ public enum ImageName {
     SAND,
     FOREST,
     WETLAND,
-    SCRUB,
     ROCK,
     WATER,
     SAFE,

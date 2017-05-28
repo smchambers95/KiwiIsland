@@ -35,7 +35,7 @@ public class ResourceManager {
         // Load Images
         addImage(ImageName.FOREST, "textures/grass-texture.png");
         addImage(ImageName.WETLAND, "textures/wetland-texture.png");
-        addImage(ImageName.SCRUB, "textures/wetland-texture.png");
+        addImage(ImageName.ROCK, "textures/rock-texture.png");
         addImage(ImageName.WATER, "textures/water-texture.png");
         addImage(ImageName.SAND, "textures/sand-texture.png");
         addImage(ImageName.SAFE, "textures/safe-texture.png");
