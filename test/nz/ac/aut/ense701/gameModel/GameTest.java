@@ -104,7 +104,7 @@ public class GameTest extends junit.framework.TestCase
     @Test
     public void testGetPlayer(){
         String name = player.getName();
-        String checkName = "River Song";
+        String checkName = "Player";
         assertTrue("Check player name", name.equals(checkName) );
     } 
 
@@ -285,13 +285,6 @@ public class GameTest extends junit.framework.TestCase
     }
     
     @Test
-    public void testUseItemTrapFinalPredator(){
-        
-        assertTrue("Check player moves", trapAllPredators());
-        assertTrue("Game should be won", game.getState()== GameState.WON);    
-    }
-    
-    @Test
     public void testUseItemBrokenTrap(){
         Tool trap = new Tool(playerPosition,"Trap", "Rat trap",1.0);
         player.collect(trap);
@@ -332,8 +325,6 @@ public class GameTest extends junit.framework.TestCase
         double stamina = player.getStaminaLevel();  
 
         assertTrue("Move valid", game.playerMove(MoveDirection.SOUTH));
-        //Stamina reduced by move
-        assertEquals("Wrong stamina", stamina - 2, player.getStaminaLevel());
         Position newPos = game.getPlayer().getPosition();
         assertEquals("Wrong position", newPos.getRow(), 1);
         assertFalse("Player should not be here", game.hasPlayer(playerPosition.getRow(), playerPosition.getColumn()));
@@ -346,6 +337,8 @@ public class GameTest extends junit.framework.TestCase
         island.addOccupant(hazardPosition, fatal);
         
         assertTrue("Move valid", game.playerMove(MoveDirection.SOUTH));
+        //Force update so we dont have to wait for game to refresh
+        game.updateGameState();
         //Fatal Hazard should kill player
         assertTrue("Player should be dead.", !player.isAlive());
         assertTrue("Game should be over", game.getState()== GameState.LOST);
@@ -447,7 +440,8 @@ public class GameTest extends junit.framework.TestCase
         Tool trap = new Tool(playerPosition, "Trap", "A trap", 1.0);
         game.collectItem(trap);
         game.dropItem(trap);
-        
+        //Force update so we dont have to wait for game to refresh
+        game.updateGameState();
         // Kiwi should've been killed by the trap
         assertTrue("Game should be over", game.getState()== GameState.LOST);
     }

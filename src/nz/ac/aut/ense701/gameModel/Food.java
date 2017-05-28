@@ -24,6 +24,7 @@ public class Food extends Item
     public Food(Position pos, String name, String description, double weight, double energy) 
     {
         super(pos, name, description,weight);
+        enumRepresentation = OccupantName.BASKET;
         this.energy = energy;
     }
 

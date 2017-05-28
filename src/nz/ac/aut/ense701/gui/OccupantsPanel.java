@@ -7,7 +7,10 @@ package nz.ac.aut.ense701.gui;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import javax.swing.JPanel;
+import nz.ac.aut.ense701.gameModel.OccupantName;
 
 /**
  * This panel is for representing occupants
@@ -49,36 +52,44 @@ public class OccupantsPanel extends JPanel
      * This function handles updating what occupants this square should represent
      * @param occupantsRepresentation a string where every character represents an occupant
      */
-    public synchronized void setOccupants(String occupantsRepresentation) 
+    public synchronized void setOccupants(LinkedList<OccupantName> occupantsRepresentation) 
     {
-        for(int i = 0; i < occupantsRepresentation.length(); i++)
+        int occupantsCompleted = 0;
+        for(OccupantName occupantName : occupantsRepresentation)
         {
             // Create an ImageName to hold the enum of the image we should use for this occupant
             ImageName imageName;
-            switch (occupantsRepresentation.charAt(i))
+            switch(occupantName)
             {
-                case 'X' : imageName = ImageName.PLAYER; break;           
-                case 'K' : imageName = ImageName.KIWI; break;   
-                case 'E' : imageName = ImageName.BASKET; break;
-                case 'T' : imageName = ImageName.TRAP; break; 
-                case 'H' : imageName = ImageName.HAZARD; break;
-                default  : imageName = ImageName.UNKNOWN; break;
+                case PLAYER     : imageName = ImageName.PLAYER; break; 
+                case KIWI       : imageName = ImageName.KIWI; break;  
+                case BASKET     : imageName = ImageName.BASKET; break;
+                case HAZARD     : imageName = ImageName.HAZARD; break;
+                case TUI        : imageName = ImageName.TUI; break;
+                case CRAB       : imageName = ImageName.CRAB; break;
+                case TRAP       : imageName = ImageName.TRAP; break;
+                case STOAT      : imageName = ImageName.STOAT; break;
+                case POSSUM     : imageName = ImageName.POSSUM; break;
+                default         : imageName = ImageName.UNKNOWN; break;
             }
+            
             // If a StretchImage already exists use it, instead of making another (save performance)
-            if(i < images.size())
-                images.get(i).setImageName(imageName);
+            if(occupantsCompleted < images.size())
+                images.get(occupantsCompleted).setImageName(imageName);
             else 
             {
                 FittedImage image = new FittedImage(imageName, resourceManager);  
                 images.add(image);
                 this.add(image);
             }        
+            
+            occupantsCompleted++;
         }
-        
+
         // Remove any extra images from the panel and list
-        if(occupantsRepresentation.length() < images.size()){
+        if(occupantsRepresentation.size() < images.size()){
             // Remove in reverse order to avoid element shifting
-            for(int i = images.size(); i > occupantsRepresentation.length(); i--){
+            for(int i = images.size(); i > occupantsRepresentation.size(); i--){
                 this.remove(i - 1);
                 images.remove(i - 1);
             }

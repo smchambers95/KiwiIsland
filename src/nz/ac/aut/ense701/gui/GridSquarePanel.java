@@ -79,7 +79,7 @@ public class GridSquarePanel extends javax.swing.JPanel
         }
         
         // Set the occupants label to what occupants are in this square
-        occupantsPanel.setOccupants(game.getOccupantStringRepresentation(row,column));
+        occupantsPanel.setOccupants(game.getOccupantEnumRepresentation(row,column));
         
         // Set the name of the image the terrian should represent
         terrainImage.setImageName(imageName);

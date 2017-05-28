@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -221,6 +222,11 @@ public class Game implements Runnable
      */
     public String getOccupantStringRepresentation(int row, int column) {
         return island.getOccupantStringRepresentation(new Position(island, row, column));
+    }
+    
+    public LinkedList<OccupantName> getOccupantEnumRepresentation(int row, int column)
+    {
+        return island.getOccupantEnumRepresentation(new Position(island, row, column));
     }
     
     /**
@@ -710,7 +716,7 @@ public class Game implements Runnable
      * Used after player actions to update game state.
      * Applies the Win/Lose rules.
      */
-    private void updateGameState()
+    public void updateGameState()
     {
         String message;
         if ( !player.isAlive() )

@@ -40,10 +40,10 @@ public class ResourceManager {
         addImage(ImageName.SAND, "textures/sand-texture.png");
         addImage(ImageName.SAFE, "textures/safe-texture.png");
         addImage(ImageName.PLAYER, "textures/player-texture.png");
-        addImage(ImageName.UNKNOWN, "textures/unknown-texture.png");
-        
+        addImage(ImageName.UNKNOWN, "textures/unknown-texture.png");  
         addImage(ImageName.BASKET, "textures/basket-texture.png");
-        addImage(ImageName.FAUNA, "textures/fauna-texture.png");
+        addImage(ImageName.TUI, "textures/tui-texture.png");
+        addImage(ImageName.CRAB, "textures/crab-texture.png");
         addImage(ImageName.TRAP, "textures/trap-texture.png");
         addImage(ImageName.KIWI, "textures/kiwi-texture.png");
         addImage(ImageName.STOAT, "textures/stoat-texture.png");

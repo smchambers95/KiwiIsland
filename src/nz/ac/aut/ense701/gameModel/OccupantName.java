@@ -3,28 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nz.ac.aut.ense701.gui;
+package nz.ac.aut.ense701.gameModel;
 
 /**
  *
- * @author Marc Tucker
+ * @author Me
  */
-public enum ImageName {
-    SAND,
-    FOREST,
-    WETLAND,
-    SCRUB,
-    ROCK,
-    WATER,
-    SAFE,
-    PLAYER,
-    STOAT,
-    POSSUM,
-    TRAP,
-    BASKET,
-    TUI,
-    CRAB,
+public enum OccupantName 
+{
     KIWI,
     HAZARD,
+    POSSUM,
+    STOAT,
+    CRAB,
+    TUI,
+    BASKET,
+    TRAP,
+    PLAYER,
     UNKNOWN
 }

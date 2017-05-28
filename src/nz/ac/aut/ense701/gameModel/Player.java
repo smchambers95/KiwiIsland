@@ -34,11 +34,14 @@ public class Player extends Occupant
                   double maxBackpackWeight)
     {
         super(position, name, "Player");
+        enumRepresentation = OccupantName.PLAYER;
         this.maxStamina        = maxStamina;
         this.stamina = maxStamina;
         this.maxBackpackWeight = maxBackpackWeight;
         this.alive = true;
         this.backpack = new HashSet<Item>();
+        
+        
     }   
     
     /*****************************************************************************************************

@@ -2,6 +2,7 @@ package nz.ac.aut.ense701.gameModel;
 
 import java.security.InvalidParameterException;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 /**
@@ -82,6 +83,25 @@ public class GridSquare
         }
         return result;
     } 
+    /**
+     * Get enum values on current square and add them to linked list
+     * @return linked list of occupant enums 
+     */
+    public LinkedList<OccupantName> getOccupantEnumRepresentation()
+    {
+        LinkedList<OccupantName> tmpList = new LinkedList<OccupantName>();
+        
+        for(Occupant occupant : occupants)
+        {
+            tmpList.add(occupant.getEnumRepresentation());
+        }
+        if(player != null)
+        {
+            tmpList.add(OccupantName.PLAYER);
+        }
+        
+        return tmpList;
+    }
     
     /**
      * Returns a string representation of the terrain.

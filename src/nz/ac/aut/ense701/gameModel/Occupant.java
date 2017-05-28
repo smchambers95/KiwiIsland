@@ -7,12 +7,13 @@ package nz.ac.aut.ense701.gameModel;
  * @version 1.0 - July 2011
  * @version 2.0 - October 2011 - AS - added toString
  */
+
 public abstract class Occupant 
 {
     protected Position position;
     protected final String   name;
     protected final String   description;    
-
+    protected OccupantName enumRepresentation;
     /**
      * Construct an occupant for a known position & name.
      * @param position the position of the occupant
@@ -23,7 +24,31 @@ public abstract class Occupant
     {
         this.position    = position;
         this.name        = name;
-        this.description = description;        
+        this.description = description;     
+        
+        switch(name){
+            //Predators
+            case "Possum" : 
+                enumRepresentation = OccupantName.POSSUM;
+                break;
+            case "Stoat" : 
+                enumRepresentation = OccupantName.STOAT;
+                break;     
+            //Tools
+            case "Trap" : 
+                enumRepresentation = OccupantName.TRAP;
+                break; 
+            //Faunas
+            case "Crab" : 
+                enumRepresentation = OccupantName.CRAB;
+                break;
+            case "Tui" : 
+                enumRepresentation = OccupantName.TUI;
+                break; 
+            default:
+                enumRepresentation = OccupantName.UNKNOWN;
+                break;
+        } 
     }
     
     /**
@@ -85,5 +110,8 @@ public abstract class Occupant
      */
     public abstract String getStringRepresentation();
 
-
+    public OccupantName getEnumRepresentation()
+    {
+        return enumRepresentation;
+    }
 }

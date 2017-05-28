@@ -1,5 +1,7 @@
 package nz.ac.aut.ense701.gameModel;
 
+import java.util.LinkedList;
+
 /**
  * A class to represent an island in the world on which the game is played.
  * @author AS
@@ -124,6 +126,12 @@ public class Island
     {
         GridSquare square = getGridSquare(position);
         return square.getOccupantStringRepresentation();
+    }
+    
+    public LinkedList<OccupantName> getOccupantEnumRepresentation(Position position)
+    {
+        GridSquare square = getGridSquare(position);
+        return square.getOccupantEnumRepresentation();
     }
     
     /**

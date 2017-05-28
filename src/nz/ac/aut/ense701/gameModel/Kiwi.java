@@ -21,6 +21,7 @@ public class Kiwi extends Item
     public Kiwi(Position pos, String name, String description) 
     {
         super(pos, name, description, KIWI_WEIGHT);
+        enumRepresentation = OccupantName.KIWI;
         safe = false;
         dead = false;
     } 
