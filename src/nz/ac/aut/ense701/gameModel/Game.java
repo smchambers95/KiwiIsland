@@ -444,7 +444,12 @@ public class Game implements Runnable
                     outputMessages.add("You remove a kiwi from the safe zone.");
                 }
             }
-            outputMessages.add("You pick up a: "+collectedItem.getName()+".");
+            else if(item instanceof Food)
+            {
+                 outputMessages.add("You find a "+collectedItem.getName()+" in the picnic basket.");
+            }
+            else
+                outputMessages.add("You pick up a: "+collectedItem.getName()+".");
             // everybody has to know about the change
             notifyGameEventListeners();
         }      
