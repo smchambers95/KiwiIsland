@@ -725,21 +725,12 @@ public class Game implements Runnable
             message = "Sorry, you have lost the game. A kiwi has been killed";
             this.setLoseMessage(message);
         }
-        else if(predatorsTrapped == totalPredators)
+        else if(predatorsTrapped == totalPredators && savedKiwiCount == totalKiwis)
         {
             state = GameState.WON;
             message = "You win! You have done an excellent job and trapped all the predators.";
             this.setWinMessage(message);
-        }
-        else if(savedKiwiCount == totalKiwis)
-        {
-            if(predatorsTrapped >= totalPredators)
-            {
-                state = GameState.WON;
-                message = "You win! You have saved all the kiwi and trapped all of the predators.";
-                this.setWinMessage(message);
-            }
-        }               
+        }          
         
         // notify listeners about changes
         notifyGameEventListeners();
