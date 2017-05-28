@@ -18,5 +18,6 @@ public enum ImageName {
     WATER,
     SAFE,
     PLAYER,
+    HAZARD,
     UNKNOWN
 }

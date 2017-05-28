@@ -41,6 +41,7 @@ public class ResourceManager {
         addImage(ImageName.SAFE, "textures/safe-texture.png");
         addImage(ImageName.PLAYER, "textures/player-texture.png");
         addImage(ImageName.UNKNOWN, "textures/unknown-texture.png");
+        addImage(ImageName.HAZARD, "textures/hazard-texture.png");
     }
     
     private boolean addImage(ImageName imageName, String filePath)

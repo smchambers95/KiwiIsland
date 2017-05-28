@@ -76,7 +76,9 @@ public class FittedImage extends JLabel {
                 double widthRatio = (double)getWidth() / imageWidth;
                 double heightRatio = (double)getHeight() / imageHeight;
                 double ratio = Math.min(widthRatio, heightRatio);
-                g.drawImage(image, 0, 0, (int)(imageWidth * ratio), (int)(imageHeight * ratio), this);
+                int adjustedWidth = (int)(imageWidth * ratio);
+                int adjustedHeight = (int)(imageHeight * ratio);
+                g.drawImage(image, (getWidth()/2) - (adjustedWidth/2), (getHeight()/2) - (adjustedHeight/2), adjustedWidth, adjustedHeight, this);
             }
             else
                this.setText("Missing Image"); 
