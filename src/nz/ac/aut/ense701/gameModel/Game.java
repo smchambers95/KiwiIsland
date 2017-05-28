@@ -753,7 +753,7 @@ public class Game implements Runnable
         else if(predatorsTrapped == totalPredators && savedKiwiCount == totalKiwis)
         {
             state = GameState.WON;
-            message = "You win! You have done an excellent job and trapped all the predators.";
+            message = "You win! You have saved all the kiwis and trapped all the predators!";
             this.setWinMessage(message);
         }          
         
