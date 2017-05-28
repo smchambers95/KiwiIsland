@@ -445,6 +445,13 @@ public class GameTest extends junit.framework.TestCase
         // Kiwi should've been killed by the trap
         assertTrue("Game should be over", game.getState()== GameState.LOST);
     }
+    
+    @Test
+    public void testTrapAllPredators()
+    {
+        //Trap all predators
+        assertTrue("All predators should be dead", trapAllPredators());
+    }
 /**
  * Private helper methods
  */
@@ -456,7 +463,7 @@ public class GameTest extends junit.framework.TestCase
         game.collectItem(trap);
         
         //Now player needs to trap all predators
-        //Predator 1
+        //Predator 1 stoat
         boolean moveOK = playerMoveWest(2);
        
         if(moveOK){
@@ -464,13 +471,13 @@ public class GameTest extends junit.framework.TestCase
             game.collectItem(trap);
             moveOK = playerMoveSouth(4);
         }
-        //Predator 2
+        //Predator 2 possum
         if(moveOK){
             moveOK = playerMoveWest(3);
             game.dropItem(trap);
             game.collectItem(trap);
         }
-        //Predator 3
+        //Predator 3 possum
         if(moveOK){
             moveOK = playerMoveEast(4);
         }
@@ -478,8 +485,20 @@ public class GameTest extends junit.framework.TestCase
             moveOK = playerMoveSouth(2);
             game.dropItem(trap);
             game.collectItem(trap);
-        }    
-        return moveOK;
+        } 
+        //Predator 4 stoat
+        if(moveOK)
+        {
+            moveOK = playerMoveSouth(1);
+            game.dropItem(trap);
+            game.collectItem(trap);
+        }
+        
+        //Check all predators have been killed
+        if(game.getPredatorsRemaining() != 0)
+            return false;
+        else
+            return true; 
     }
     
     private boolean playerMoveNorth(int numberOfMoves)
