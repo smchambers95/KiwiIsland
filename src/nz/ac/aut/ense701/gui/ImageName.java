@@ -18,5 +18,11 @@ public enum ImageName {
     WATER,
     SAFE,
     PLAYER,
+    STOAT,
+    POSSUM,
+    TRAP,
+    BASKET,
+    FAUNA,
+    KIWI,
     UNKNOWN
 }

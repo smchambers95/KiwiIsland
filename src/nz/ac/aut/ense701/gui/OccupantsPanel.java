@@ -57,7 +57,10 @@ public class OccupantsPanel extends JPanel
             ImageName imageName;
             switch (occupantsRepresentation.charAt(i))
             {
-                case 'X' : imageName = ImageName.PLAYER; break;
+                case 'X' : imageName = ImageName.PLAYER; break;           
+                case 'K' : imageName = ImageName.KIWI; break;   
+                case 'E' : imageName = ImageName.BASKET; break;
+                case 'T' : imageName = ImageName.TRAP; break; 
                 default  : imageName = ImageName.UNKNOWN; break;
             }
             // If a StretchImage already exists use it, instead of making another (save performance)
