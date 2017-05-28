@@ -164,7 +164,6 @@ public class Game implements Runnable
      */
     public boolean isFaunaMovePossible(Fauna fauna, MoveDirection direction)
     {
-        boolean isMovePossible = false;
         // what position is the fauna moving to?
         Position newPosition = fauna.getPosition().getNewPosition(direction);
         
@@ -588,7 +587,7 @@ public class Game implements Runnable
     {
         // what terrain is the player moving on currently
         boolean successfulMove = false;
-        if ( isPlayerMovePossible(direction) )
+        if (isPlayerMovePossible(direction))
         {
             Position newPosition = player.getPosition().getNewPosition(direction);
             Terrain  terrain     = island.getTerrain(newPosition);
@@ -679,7 +678,7 @@ public class Game implements Runnable
      *********************************************************************************************************************************/
     
     /**
-     * The game can be run as a thread to allow things that need constant updates to be updated
+     * The game can be run as a thread to allow things that need constant updates to be updated (the game loop)
      */
     @Override
     public void run() 
@@ -691,6 +690,10 @@ public class Game implements Runnable
             
             if(player != null)
                 player.updateStamina(delta);  
+            
+            // Update every predator controller we have
+            for(AIPredatorController controller : predatorControllers)
+                controller.update(delta);
             
             updateGameState();
             
@@ -735,13 +738,7 @@ public class Game implements Runnable
                 message = "You win! You have saved all the kiwi and trapped all of the predators.";
                 this.setWinMessage(message);
             }
-        }
-        
-        if(state != GameState.PLAYING){
-            for (AIPredatorController controller : predatorControllers)
-                controller.killController();
-            predatorControllers.clear();
-        }                
+        }               
         
         // notify listeners about changes
         notifyGameEventListeners();
@@ -989,9 +986,7 @@ public class Game implements Runnable
             else if ( occType.equals("P") )
             {
                 occupant = new Predator(occPos, occName, occDesc);
-                AIPredatorController controller = new AIPredatorController(this, (Fauna)occupant, true);
-                Thread thread = new Thread(controller);
-                thread.start();
+                AIPredatorController controller = new AIPredatorController(this, (Predator)occupant);
                 predatorControllers.add(controller);
                 totalPredators++;
             }

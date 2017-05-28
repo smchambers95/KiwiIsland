@@ -233,7 +233,6 @@ public class Island
     {
         // Remove the fauna from it's previous square
         getGridSquare(oldPosition).removeOccupant(fauna);
-        
         // Add the fauna to the new square
         getGridSquare(fauna.getPosition()).addOccupant(fauna);
     }
