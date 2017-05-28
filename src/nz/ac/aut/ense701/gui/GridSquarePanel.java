@@ -1,7 +1,9 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.Color;
+import javax.swing.JLabel;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import nz.ac.aut.ense701.gameModel.Game;

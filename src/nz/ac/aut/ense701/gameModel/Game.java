@@ -485,9 +485,7 @@ public class Game implements Runnable
                         outputMessages.add("You drop the kiwi in the safe zone.");
                     }
                     else
-                        outputMessages.add("You drop the kiwi.");    
-                    
-                    updateGameState();       
+                        outputMessages.add("You drop the kiwi.");         
                 }
                 else if (item instanceof Tool)
                 {
@@ -519,9 +517,7 @@ public class Game implements Runnable
                     {
                         //Drop other tool type
                         outputMessages.add("You drop a: "+item);
-                    }
-                    // Kill predator or kiwi if trap is used when player is in same square                              
-                    updateGameState();
+                    }                          
                 }
                 else
                 {
@@ -573,7 +569,6 @@ public class Game implements Runnable
                     }
             }
         }
-        updateGameState();
         return success;
     }
        
@@ -598,8 +593,7 @@ public class Game implements Runnable
             successfulMove = true;
                     
             // Is there a hazard?
-            checkForHazard();
-            updateGameState();            
+            checkForHazard();         
         }
         else if(!enoughStaminaToMove)
             outputMessages.add("You are out of breath, you need to rest before you can move again");
@@ -646,9 +640,7 @@ public class Game implements Runnable
                         outputMessages.add("You have trapped a predator. Well done.");    
                     }  
                 }
-            }
-                
-            updateGameState();            
+            }                
         }
         return successfulMove;
     }
@@ -697,9 +689,13 @@ public class Game implements Runnable
             
             updateGameState();
             
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException ex) {
+            // Force the gameloop to sleep, to restrict resource hogging and overkill updating
+            try 
+            {
+                Thread.sleep(50);
+            } 
+            catch (InterruptedException ex) 
+            {
                 Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

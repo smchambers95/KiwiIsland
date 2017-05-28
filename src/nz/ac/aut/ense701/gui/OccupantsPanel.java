@@ -80,7 +80,8 @@ public class OccupantsPanel extends JPanel
             }
         }
            
-        // Invoke repaint on the frame because of the change        
+        // Invoke revalidate and repaint on the frame to force the visual update and change      
+        this.revalidate();
         this.repaint();
     }
 }
