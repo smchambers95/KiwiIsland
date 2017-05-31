@@ -1,9 +1,7 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.Color;
-import javax.swing.JLabel;
 import javax.swing.SpringLayout;
-import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import nz.ac.aut.ense701.gameModel.Game;
@@ -25,7 +23,7 @@ public class GridSquarePanel extends javax.swing.JPanel
      * @param row the row to represent
      * @param column the column to represent
      */
-    public GridSquarePanel(Game game, ResourceManager resourceManager, int row, int column)
+    public GridSquarePanel(Game game, ImageManager resourceManager, int row, int column)
     {
         this.game   = game;
         this.row    = row;
@@ -117,7 +115,7 @@ public class GridSquarePanel extends javax.swing.JPanel
     private final OccupantsPanel occupantsPanel;
     
     private final Game game;
-    private final ResourceManager resourceManager;
+    private final ImageManager resourceManager;
     private final int row;
     private final int column;
     

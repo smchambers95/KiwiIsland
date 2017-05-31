@@ -10,21 +10,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import javax.imageio.ImageIO;
-import javax.sound.sampled.Clip;
 
 /**
  *
  * @author Sean Chambers, Marc Tucker 
  */
-public class ResourceManager {
+public class ImageManager {
     private final HashMap<ImageName, Image> imageMap;
-    private final HashMap<SoundName, Clip> audioMap;
     
-    public ResourceManager()
+    public ImageManager()
     {
         // Create the maps to hold the resources
         imageMap  = new HashMap();
-        audioMap = new HashMap();
         
         // Actually load in the resources from disc
         loadResources();
@@ -53,18 +50,16 @@ public class ResourceManager {
     
     private boolean addImage(ImageName imageName, String filePath)
     {
-        try {
+        try 
+        {
             imageMap.put(imageName, (ImageIO.read(new File(filePath))));
             return true;
-        } catch (IOException ex) {
+        } 
+        catch (IOException ex) 
+        {
             System.out.println("Error: Could not read texture at path: " + filePath);
             return false;
         }
-    }
-    
-    private void addSound(SoundName soundName, String filePath)
-    {
-        
     }
     
     public boolean containsImage(ImageName imageName)

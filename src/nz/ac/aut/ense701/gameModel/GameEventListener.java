@@ -8,7 +8,9 @@
 
 package nz.ac.aut.ense701.gameModel;
 
+import java.util.List;
+
 public interface GameEventListener 
 {
-    public void gameStateChanged();
+    public void gameStateChanged(List<EventName> events);
 }

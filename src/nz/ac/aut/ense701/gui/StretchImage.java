@@ -17,9 +17,9 @@ import javax.swing.SwingConstants;
  */
 public class StretchImage extends JLabel {
     private ImageName imageName;
-    private final ResourceManager resourceManager;
+    private final ImageManager resourceManager;
 
-    public StretchImage(ImageName imageName, ResourceManager resourceManager){
+    public StretchImage(ImageName imageName, ImageManager resourceManager){
         super();
         this.imageName = imageName;
         this.resourceManager = resourceManager;

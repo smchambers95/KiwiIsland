@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
  */
 public class FittedImage extends JLabel {
     private ImageName imageName;
-    private final ResourceManager resourceManager;
+    private final ImageManager resourceManager;
     
     private double imageWidth;
     private double imageHeight;
@@ -29,7 +29,7 @@ public class FittedImage extends JLabel {
      * @param imageName allows the Image to start with an image (leave null if no picture is desired)
      * @param resourceManager reference to the ResourceManager that will hold the assets for this picture
      */
-    public FittedImage(ImageName imageName, ResourceManager resourceManager){
+    public FittedImage(ImageName imageName, ImageManager resourceManager){
         super();
         this.imageName = imageName;
         this.resourceManager = resourceManager;

@@ -2,7 +2,6 @@ package nz.ac.aut.ense701.gameModel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -66,7 +65,8 @@ public class Game implements Runnable
         Thread gameThread = new Thread(this);
         gameThread.start();
         notifyGameEventListeners();
-        outputMessages = new ArrayList<String>();
+        outputMessages = new ArrayList<>();
+        events = new LinkedList<>();
     }
     
     /***********************************************************************************************************************
@@ -603,6 +603,25 @@ public class Game implements Runnable
             island.updatePlayerPosition(player);
             successfulMove = true;
                     
+            switch(terrain)
+            {
+                case WATER:
+                    events.add(EventName.PLAYER_TO_WATER);
+                    break;
+                case SAND:
+                    events.add(EventName.PLAYER_TO_SAND);
+                    break;
+                case WETLAND:
+                    events.add(EventName.PLAYER_TO_WETLAND);
+                    break;
+                case FOREST:
+                    events.add(EventName.PLAYER_TO_FOREST);
+                    break;
+                case ROCK:
+                    events.add(EventName.PLAYER_TO_ROCK);
+                    break;
+            }
+            
             // Is there a hazard?
             checkForHazard();         
         }
@@ -740,6 +759,7 @@ public class Game implements Runnable
         
         // notify listeners about changes
         notifyGameEventListeners();
+        events.clear();
     }
     
        
@@ -857,7 +877,7 @@ public class Game implements Runnable
     {
         for ( GameEventListener listener : eventListeners ) 
         {
-            listener.gameStateChanged();
+            listener.gameStateChanged(events);
         }
     }
 
@@ -1002,6 +1022,7 @@ public class Game implements Runnable
     private int deadKiwis;
     private Set<AIPredatorController> predatorControllers;
     private Set<GameEventListener> eventListeners;
+    private List<EventName> events;
     private long prvTime;
         
     private String winMessage = "";

@@ -2,11 +2,13 @@ package nz.ac.aut.ense701.gui;
 
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.util.List;
 import javax.swing.JOptionPane;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameEventListener;
 import nz.ac.aut.ense701.gameModel.GameState;
 import nz.ac.aut.ense701.controllers.PlayerController;
+import nz.ac.aut.ense701.gameModel.EventName;
 import nz.ac.aut.ense701.gameModel.MoveDirection;
 
 /*
@@ -28,7 +30,7 @@ public class KiwiCountUI
     {
         assert game != null : "Make sure game object is created before UI";
         this.game = game;  
-        resourceManager = new ResourceManager();
+        resourceManager = new ImageManager();
         initComponents();
         initIslandGrid();
         update();
@@ -50,9 +52,10 @@ public class KiwiCountUI
     /**
      * This method is called by the game model every time something changes.
      * Trigger an update.
+     * @param events events that have happened since last update
      */
     @Override
-    public void gameStateChanged()
+    public void gameStateChanged(List<EventName> events)
     {
         update();
         
@@ -608,6 +611,6 @@ public class KiwiCountUI
     // End of variables declaration//GEN-END:variables
     
     private Game game;
-    private ResourceManager resourceManager;
+    private ImageManager resourceManager;
     private String outputMessage;
 }

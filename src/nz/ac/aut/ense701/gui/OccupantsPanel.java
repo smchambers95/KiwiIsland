@@ -19,7 +19,7 @@ import nz.ac.aut.ense701.gameModel.OccupantName;
  */
 public class OccupantsPanel extends JPanel 
 {
-    private final ResourceManager resourceManager;
+    private final ImageManager resourceManager;
     
     private GridLayout layout;
     private final ArrayList<FittedImage> images;
@@ -28,7 +28,7 @@ public class OccupantsPanel extends JPanel
      * Creates a new OccupantsPanel
      * @param resourceManager give reference to the resource manager that holds the necessary assets for expected occupants
      */
-    public OccupantsPanel(ResourceManager resourceManager) 
+    public OccupantsPanel(ImageManager resourceManager) 
     {
         this.resourceManager = resourceManager;
         images = new ArrayList();

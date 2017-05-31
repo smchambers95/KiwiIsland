@@ -2,6 +2,7 @@ package nz.ac.aut.ense701.main;
 
 import java.io.IOException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import nz.ac.aut.ense701.audio.AudioPlayer;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gui.KiwiCountUI;
 
@@ -26,6 +27,8 @@ public class Main
         final Game game = new Game();
         // create the GUI for the game
         final KiwiCountUI  gui  = new KiwiCountUI(game);
+        // create the audio player for the game
+        final AudioPlayer ap = new AudioPlayer(game);
         // make the GUI visible
         java.awt.EventQueue.invokeLater(new Runnable() 
         {
