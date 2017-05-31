@@ -4,7 +4,7 @@ import java.io.IOException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import nz.ac.aut.ense701.audio.AudioPlayer;
 import nz.ac.aut.ense701.gameModel.Game;
-import nz.ac.aut.ense701.gui.KiwiCountUI;
+import nz.ac.aut.ense701.gui.KiwiIslandUI;
 
 /**
  * Kiwi Count Project
@@ -15,7 +15,7 @@ import nz.ac.aut.ense701.gui.KiwiCountUI;
 public class Main 
 {
     /**
-     * Main method of Kiwi Count.
+     * Main method of Kiwi Island.
      * 
      * @param args the command line arguments
      * @throws java.io.IOException
@@ -26,7 +26,7 @@ public class Main
         // create the game object
         final Game game = new Game();
         // create the GUI for the game
-        final KiwiCountUI  gui  = new KiwiCountUI(game);
+        final KiwiIslandUI  gui  = new KiwiIslandUI(game);
         // create the audio player for the game
         final AudioPlayer ap = new AudioPlayer(game);
         // make the GUI visible

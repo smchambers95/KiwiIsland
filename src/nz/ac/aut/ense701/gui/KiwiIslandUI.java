@@ -18,7 +18,7 @@ import nz.ac.aut.ense701.gameModel.MoveDirection;
  * @version July 2011
  */
 
-public class KiwiCountUI 
+public class KiwiIslandUI 
     extends javax.swing.JFrame 
     implements GameEventListener
 {
@@ -26,7 +26,7 @@ public class KiwiCountUI
      * Creates a GUI for the KiwiIsland game.
      * @param game the game object to represent with this GUI.
      */
-    public KiwiCountUI(Game game)
+    public KiwiIslandUI(Game game)
     {
         assert game != null : "Make sure game object is created before UI";
         this.game = game;  
@@ -208,7 +208,7 @@ public class KiwiCountUI
         outputWindow = new java.awt.TextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Kiwi Count");
+        setTitle("Kiwi Island");
 
         pnlContent.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlContent.setLayout(new java.awt.BorderLayout(10, 0));
@@ -517,6 +517,8 @@ public class KiwiCountUI
         pnlContent.add(outputWindow, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(pnlContent, java.awt.BorderLayout.CENTER);
+
+        getAccessibleContext().setAccessibleName("Kiwi Island");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
