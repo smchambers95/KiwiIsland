@@ -96,7 +96,7 @@ public class OutputWindow extends TextArea {
                     case GRID_FULL:
                         updateOutputWindow("Cannot drop anymore items on current tile.");
                         break;  
-                    case SNACK_USE:
+                    case SNACK_CONSUME:
                         updateOutputWindow("You enjoy your snack and feel replenished.");
                         break;
                     case TRAP_FIX:

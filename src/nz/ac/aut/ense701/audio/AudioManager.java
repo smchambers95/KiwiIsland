@@ -48,6 +48,7 @@ public class AudioManager {
         addAudio(EventName.PLAYER_TO_ROCK, "audio/rock-footstep.wav");
         addAudio(EventName.PLAYER_TO_WATER, "audio/water-footstep.wav");
         addAudio(EventName.PLAYER_TO_SAND, "audio/sand-footstep.wav");
+        addAudio(EventName.SNACK_CONSUME, "audio/snack-eat.wav");
     }
     
     /**

@@ -545,7 +545,7 @@ public class Game implements Runnable
             
             // player gets energy boost from food
             player.increaseStamina(food.getEnergy());
-            events.add(EventName.SNACK_USE);
+            events.add(EventName.SNACK_CONSUME);
             // player has consumed the food: remove from inventory
             player.drop(food);
         }

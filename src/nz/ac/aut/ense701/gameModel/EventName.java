@@ -28,7 +28,7 @@ public enum EventName {
     TRAP_KIWI,
     TRAP_PREDATOR,
     TRAP_BREAK,
-    SNACK_USE,
+    SNACK_CONSUME,
     SNACK_DROP,
     SNACK_PICKUP,
     PREDATOR_KILL_KIWI,
