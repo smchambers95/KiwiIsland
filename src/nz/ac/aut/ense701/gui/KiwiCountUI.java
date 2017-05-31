@@ -30,7 +30,7 @@ public class KiwiCountUI
     {
         assert game != null : "Make sure game object is created before UI";
         this.game = game;  
-        resourceManager = new ImageManager();
+        imageManager = new ImageManager();
         initComponents();
         initIslandGrid();
         update();
@@ -586,7 +586,7 @@ public class KiwiCountUI
         {
             for ( int col = 0 ; col < columns ; col++ )
             {
-                pnlIsland.add(new GridSquarePanel(game, resourceManager, row, col));
+                pnlIsland.add(new GridSquarePanel(game, imageManager, row, col));
             }
         }
     }
@@ -611,6 +611,6 @@ public class KiwiCountUI
     // End of variables declaration//GEN-END:variables
     
     private Game game;
-    private ImageManager resourceManager;
+    private ImageManager imageManager;
     private String outputMessage;
 }

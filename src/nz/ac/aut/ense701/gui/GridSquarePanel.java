@@ -19,18 +19,18 @@ public class GridSquarePanel extends javax.swing.JPanel
     /** 
      * Creates new GridSquarePanel.
      * @param game the game to represent
-     * @param resourceManager the resource manager which holds the assets to represent the game with
+     * @param imageManager the image manager which holds the assets to represent the game with
      * @param row the row to represent
      * @param column the column to represent
      */
-    public GridSquarePanel(Game game, ImageManager resourceManager, int row, int column)
+    public GridSquarePanel(Game game, ImageManager imageManager, int row, int column)
     {
         this.game   = game;
         this.row    = row;
         this.column = column;
-        this.resourceManager = resourceManager;
-        terrainImage = new StretchImage(null, resourceManager);
-        occupantsPanel = new OccupantsPanel(resourceManager);
+        this.imageManager = imageManager;
+        terrainImage = new StretchImage(null, imageManager);
+        occupantsPanel = new OccupantsPanel(imageManager);
         initComponents();
         setupLayout();
     }
@@ -115,7 +115,7 @@ public class GridSquarePanel extends javax.swing.JPanel
     private final OccupantsPanel occupantsPanel;
     
     private final Game game;
-    private final ImageManager resourceManager;
+    private final ImageManager imageManager;
     private final int row;
     private final int column;
     

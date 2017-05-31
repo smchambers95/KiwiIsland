@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
  */
 public class FittedImage extends JLabel {
     private ImageName imageName;
-    private final ImageManager resourceManager;
+    private final ImageManager imageManager;
     
     private double imageWidth;
     private double imageHeight;
@@ -27,12 +27,12 @@ public class FittedImage extends JLabel {
     /**
      * Creates a Fitted Image object
      * @param imageName allows the Image to start with an image (leave null if no picture is desired)
-     * @param resourceManager reference to the ResourceManager that will hold the assets for this picture
+     * @param imageManager reference to the ImageManager that will hold the assets for this picture
      */
-    public FittedImage(ImageName imageName, ImageManager resourceManager){
+    public FittedImage(ImageName imageName, ImageManager imageManager){
         super();
         this.imageName = imageName;
-        this.resourceManager = resourceManager;
+        this.imageManager = imageManager;
         init();
     }
     
@@ -53,8 +53,8 @@ public class FittedImage extends JLabel {
      */
     public void setImageName(ImageName imageName){
         this.imageName = imageName;
-        if(imageName != null && resourceManager != null && resourceManager.containsImage(imageName)){
-            ImageIcon tmp = new ImageIcon(resourceManager.getImage(imageName));
+        if(imageName != null && imageManager != null && imageManager.containsImage(imageName)){
+            ImageIcon tmp = new ImageIcon(imageManager.getImage(imageName));
             imageWidth = (double)tmp.getIconWidth();
             imageHeight = (double)tmp.getIconHeight();
         }
@@ -70,9 +70,9 @@ public class FittedImage extends JLabel {
         super.paintComponent(g);
         // Do not provide an else for this condition, as we hope the missing image name is on purpose and no image is desired to be drawn
         if(imageName != null){
-            if(resourceManager != null && resourceManager.containsImage(imageName)){ 
+            if(imageManager != null && imageManager.containsImage(imageName)){ 
                 // Images are held in a HashMap so it's an Order 1 look up (not wasting performance)   
-                Image image = resourceManager.getImage(imageName);
+                Image image = imageManager.getImage(imageName);
                 double widthRatio = (double)getWidth() / imageWidth;
                 double heightRatio = (double)getHeight() / imageHeight;
                 double ratio = Math.min(widthRatio, heightRatio);
