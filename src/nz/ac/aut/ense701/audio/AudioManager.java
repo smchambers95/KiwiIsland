@@ -8,7 +8,6 @@ package nz.ac.aut.ense701.audio;
 import java.util.HashMap;
 import javax.sound.sampled.Clip;
 import nz.ac.aut.ense701.gameModel.EventName;
-import sun.audio.*;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +25,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class AudioManager {
     private final HashMap<EventName, Clip> audioMap;
     
+    /**
+     * Constructs an AudioManager and runs the loadResources function
+     */
     public AudioManager()
     {
         // Create the maps to hold the resources
@@ -35,6 +37,9 @@ public class AudioManager {
         loadResources();
     }
     
+    /**
+     * Loads in all the required assets
+     */
     public void loadResources()
     {
         // Load Audio files
@@ -43,6 +48,12 @@ public class AudioManager {
         addAudio(EventName.PLAYER_TO_ROCK, "audio/rock-footstep.wav");
     }
     
+    /**
+     * This function will attempt to create a Clip object from the file path provided and put it in the map under its event name
+     * 
+     * @param eventName the event that corresponds to this audio file
+     * @param filePath the path of the audio file to bring in
+     */
     private void addAudio(EventName eventName, String filePath)
     {
         AudioInputStream audioStream = null;
@@ -66,11 +77,23 @@ public class AudioManager {
         }
     }
     
+    /**
+     * Checks if the provided eventName exists within the map
+     * 
+     * @param eventName
+     * @return 
+     */
     public boolean containsAudio(EventName eventName)
     {
         return audioMap.containsKey(eventName);
     }
     
+    /**
+     * Returns the Clip the corresponds to the event name
+     * 
+     * @param eventName the event name associated with the desired Clip object
+     * @return the Clip object associated with the event name
+     */
     public Clip getAudio(EventName eventName)
     {
         return audioMap.get(eventName);
