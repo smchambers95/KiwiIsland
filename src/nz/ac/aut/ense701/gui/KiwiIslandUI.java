@@ -92,7 +92,7 @@ public class KiwiIslandUI
     /**
      * Updates the state of the UI based on the state of the game.
      */
-    private void update(List<EventName> events)
+    private synchronized void update(List<EventName> events)
     {
         // update the grid square panels
         Component[] components = pnlIsland.getComponents();

@@ -49,6 +49,10 @@ public class AudioManager {
         addAudio(EventName.PLAYER_TO_WATER, "audio/water-footstep.wav");
         addAudio(EventName.PLAYER_TO_SAND, "audio/sand-footstep.wav");
         addAudio(EventName.SNACK_CONSUME, "audio/snack-eat.wav");
+        addAudio(EventName.HAZARD_FATAL, "audio/scream.wav");
+        addAudio(EventName.TRAP_KIWI, "audio/trap-activate.wav");
+        addAudio(EventName.TRAP_PREDATOR, "audio/trap-activate.wav");
+        addAudio(EventName.TRAP_DROPPED, "audio/trap-drop.wav");
     }
     
     /**

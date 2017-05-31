@@ -64,7 +64,6 @@ public class Game implements Runnable
         playerMessage = "";
         Thread gameThread = new Thread(this);
         gameThread.start();
-        notifyGameEventListeners();
         events = new LinkedList<>();
     }
     
@@ -466,8 +465,7 @@ public class Game implements Runnable
             Item item = (Item)what;
             success = island.addOccupant(player.getPosition(), item);
             if ( success )
-            {
-                
+            {  
                 // If the item was a kiwi, check whether or not it was dropped in a safe zone
                 if(item instanceof Kiwi){
                     if(island.hasTrap(player.getPosition())){
@@ -797,10 +795,10 @@ public class Game implements Runnable
                 events.add(EventName.TRAP_PREDATOR);
             }
             else if(occupant instanceof Kiwi){
-                events.add(EventName.TRAP_KIWI);
                 ((Kiwi) occupant).kill();
                 island.removeOccupant(currentPosition, occupant); 
                 deadKiwis++;   
+                events.add(EventName.TRAP_KIWI);
             }
         }
     }

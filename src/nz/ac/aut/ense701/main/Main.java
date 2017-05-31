@@ -25,10 +25,10 @@ public class Main
     {
         // create the game object
         final Game game = new Game();
-        // create the GUI for the game
-        final KiwiIslandUI  gui  = new KiwiIslandUI(game);
         // create the audio player for the game
         final AudioPlayer ap = new AudioPlayer(game);
+        // create the GUI for the game
+        final KiwiIslandUI  gui  = new KiwiIslandUI(game);        
         // make the GUI visible
         java.awt.EventQueue.invokeLater(new Runnable() 
         {

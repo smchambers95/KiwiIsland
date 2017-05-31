@@ -7,7 +7,6 @@ package nz.ac.aut.ense701.gui;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.JPanel;
 import nz.ac.aut.ense701.gameModel.OccupantName;
