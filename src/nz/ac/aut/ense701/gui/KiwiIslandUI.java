@@ -34,7 +34,6 @@ public class KiwiIslandUI
         imageManager = new ImageManager();
         initComponents();
         initIslandGrid();
-        resetOutputWindow();
         update(new LinkedList());
         PlayerController inputHandler = new PlayerController(game);
         pnlIsland.requestFocus(true);
@@ -62,7 +61,7 @@ public class KiwiIslandUI
                     game.getLoseMessage(), "Game over!",
                     JOptionPane.INFORMATION_MESSAGE);
             game.createNewGame();
-            resetOutputWindow();
+            ((OutputWindow)outputWindow).resetOutputWindow();
         }
         
         else if ( game.getState() == GameState.WON )
@@ -72,7 +71,7 @@ public class KiwiIslandUI
                     game.getWinMessage(), "Well Done!",
                     JOptionPane.INFORMATION_MESSAGE);
             game.createNewGame();
-            resetOutputWindow();
+            ((OutputWindow)outputWindow).resetOutputWindow();
         }
         else if (game.messageForPlayer())
         {
@@ -148,98 +147,12 @@ public class KiwiIslandUI
         btnMoveSouth.setEnabled(game.isPlayerMovePossible(MoveDirection.SOUTH));
         btnMoveWest.setEnabled( game.isPlayerMovePossible(MoveDirection.WEST)); 
         
-        //Update message box
-        if(!events.isEmpty())
-        {
-            for(EventName event : events)
-            {
-                switch(event)
-                {
-                    case  KIWI_PICKUP_SAFEZONE: 
-                        updateOutputWindow("You remove a kiwi from the safe zone.");
-                        break;
-                    case SNACK_PICKUP:
-                        updateOutputWindow("You find a snack in the picnic basket.");
-                        break;
-                    case ITEM_PICKUP:
-                        updateOutputWindow("You pick up the item.");
-                        break;
-                    case BACKPACK_FULL:
-                        updateOutputWindow("Your backpack is full. You must drop items to make more room.");
-                        break;
-                    case TRAP_KIWI:
-                        updateOutputWindow("You drop the kiwi on a trap. It dies.");
-                        break;
-                    case KIWI_SAVED:
-                        updateOutputWindow("You drop the kiwi in the safe zone");
-                        break;
-                    case KIWI_DROPPED:
-                       updateOutputWindow("You drop the kiwi.");
-                       break; 
-                    case KIWI_PICKUP:
-                        updateOutputWindow("You pick up a kiwi.");
-                        break;
-                    case TRAP_DROPPED:
-                        updateOutputWindow("You set a trap.");
-                        break;
-                    case MULTIPLE_TRAPS_ON_GRID:
-                        updateOutputWindow("You already have a trap set there.");
-                        break;
-                    case ITEM_DROP:
-                        updateOutputWindow("You drop the item.");
-                        break;
-                    case GRID_FULL:
-                        updateOutputWindow("Cannot drop anymore items on current tile.");
-                        break;  
-                    case SNACK_USE:
-                        updateOutputWindow("You enjoy your snack and feel replenished.");
-                        break;
-                    case TRAP_FIX:
-                        updateOutputWindow("You fix the broken trap.");
-                        break;
-                    case PLAYER_NO_STAMINA:
-                        updateOutputWindow("You are out of breath, you need to rest before you can move again.");
-                        break;
-                    case PREDATOR_KILL_KIWI:
-                        updateOutputWindow("A predator has killed a kiwi.");
-                        break;
-                    case TRAP_PREDATOR:
-                        updateOutputWindow("You have trapped a predator. Well done.");
-                        break;
-                    case TRAP_BROKEN:
-                        updateOutputWindow("Your trap has broken. You will need to find tools to fix it before you can use it again.");
-                        break;
-                    case HAZARD_FATAL:
-                        updateOutputWindow("A fatal hazard has killed you.");
-                        break;
-                    case HAZARD_MINOR:
-                        updateOutputWindow("You hit a minor hazard. Your stamina has been reduced.");
-                        break;     
-                }
-            }
-            
-           
-        }
+        ((OutputWindow)outputWindow).updateWindowText(events);
     }
     
-    public void updateOutputWindow(String eventText)
-    {
-            //set the output window message to the output message
-            outputWindow.setText(outputMessage+=eventText+"\n");
-            //Set scroll bar to bottom so you can see latest output
-            outputWindow.setSelectionStart(outputMessage.length());
-    }
 
-    public final void resetOutputWindow()
-    {
-        outputMessage = "Welcome to Kiwi Island!"
-                + "\n\nIt is your mission to save all the kiwis, trapping "
-                + "\nthe predators before they get to them first!"
-                + "\n\nYou can use W,S,A,D to move, and E to pick up items."
-                + "\nOther controls can be accessed via the right sidebar."
-                + "\n\nGood Luck!\n\n";
-        outputWindow.setText(outputMessage);
-    }
+
+ 
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -277,7 +190,7 @@ public class KiwiIslandUI
         javax.swing.JScrollPane scrlObjects = new javax.swing.JScrollPane();
         listObjects = new javax.swing.JList();
         btnCollect = new javax.swing.JButton();
-        outputWindow = new java.awt.TextArea();
+        outputWindow = new OutputWindow();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kiwi Island");
@@ -590,8 +503,6 @@ public class KiwiIslandUI
 
         getContentPane().add(pnlContent, java.awt.BorderLayout.CENTER);
 
-        getAccessibleContext().setAccessibleName("Kiwi Island");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -686,5 +597,6 @@ public class KiwiIslandUI
     
     private Game game;
     private ImageManager imageManager;
-    private String outputMessage;
+
+    
 }
