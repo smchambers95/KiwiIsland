@@ -603,6 +603,9 @@ public class Game implements Runnable
                 case ROCK:
                     events.add(EventName.PLAYER_TO_ROCK);
                     break;
+                case SAFE:
+                    events.add(EventName.PLAYER_TO_SAFE);
+                    break;
             }
             
             // Is there a hazard?
