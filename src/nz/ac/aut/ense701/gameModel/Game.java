@@ -721,7 +721,7 @@ public class Game implements Runnable
      * Used after player actions to update game state.
      * Applies the Win/Lose rules.
      */
-    public void updateGameState()
+    public synchronized void updateGameState()
     {
         String message;
         if ( !player.isAlive() )
