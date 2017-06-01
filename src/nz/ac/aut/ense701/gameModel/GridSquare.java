@@ -131,7 +131,9 @@ public class GridSquare
      */
     public Occupant[] getOccupants()
     {
-        return occupants.toArray(new Occupant[occupants.size()]); 
+        if(occupants.size() > 0)
+            return occupants.toArray(new Occupant[occupants.size()]); 
+        return new Occupant[]{};
     }
     
     /***************************************************************************************************
