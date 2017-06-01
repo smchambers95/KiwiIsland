@@ -2,7 +2,6 @@ package nz.ac.aut.ense701.gameModel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class Game implements Runnable
      */
     public Game() 
     {   
-        eventListeners = new HashSet<GameEventListener>();
+        eventListeners = new LinkedList<>();
         createNewGame();
     }
     
@@ -1007,7 +1006,7 @@ public class Game implements Runnable
     private int predatorsTrapped;
     private int deadKiwis;
     private Set<AIPredatorController> predatorControllers;
-    private Set<GameEventListener> eventListeners;
+    private LinkedList<GameEventListener> eventListeners;
     private List<EventName> events;
     private long prvTime;
         
