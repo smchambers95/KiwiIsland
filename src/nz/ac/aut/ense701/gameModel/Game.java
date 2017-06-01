@@ -163,21 +163,24 @@ public class Game implements Runnable
      */
     public boolean isFaunaMovePossible(Fauna fauna, MoveDirection direction)
     {
-        // what position is the fauna moving to?
-        Position newPosition = fauna.getPosition().getNewPosition(direction);
-        
-        // Check that the new postion is a valid location for fauna
-        if((newPosition != null) && newPosition.isOnIsland())
+        if(state == GameState.PLAYING)
         {
-            Terrain newTerrain = island.getTerrain(newPosition);
-            if(newTerrain.getStringRepresentation().equals("S"))
-                return false;
-            // Check if there are hazards
-            for (Occupant occupant : island.getOccupants(newPosition))
-                if (occupant instanceof Hazard)
-                   return false;
-            // All checks have passed, the move is valid
-            return true;
+            // what position is the fauna moving to?
+            Position newPosition = fauna.getPosition().getNewPosition(direction);
+
+            // Check that the new postion is a valid location for fauna
+            if((newPosition != null) && newPosition.isOnIsland())
+            {
+                Terrain newTerrain = island.getTerrain(newPosition);
+                if(newTerrain.getStringRepresentation().equals("S"))
+                    return false;
+                // Check if there are hazards
+                for (Occupant occupant : island.getOccupants(newPosition))
+                    if (occupant instanceof Hazard)
+                       return false;
+                // All checks have passed, the move is valid
+                return true;
+            }
         }
         // Move is not valid
         return false;

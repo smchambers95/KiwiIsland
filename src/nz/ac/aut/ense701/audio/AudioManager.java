@@ -53,6 +53,9 @@ public class AudioManager {
         addAudio(EventName.TRAP_KIWI, "audio/trap-activate.wav");
         addAudio(EventName.TRAP_PREDATOR, "audio/trap-activate.wav");
         addAudio(EventName.TRAP_DROPPED, "audio/trap-drop.wav");
+        addAudio(EventName.ITEM_PICKUP, "audio/item-pickup.wav");
+        addAudio(EventName.SNACK_PICKUP, "audio/item-pickup.wav");
+        addAudio(EventName.KIWI_PICKUP, "audio/item-pickup.wav");
     }
     
     /**
