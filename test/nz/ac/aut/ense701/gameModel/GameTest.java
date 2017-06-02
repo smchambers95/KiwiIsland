@@ -33,6 +33,8 @@ public class GameTest extends junit.framework.TestCase
         // Create a new game from the data file.
         // Player is in position 2,0 & has 100 units of stamina
         game           = new Game();
+        //So AId oesnt move around in the testing. 
+        game.toggleAIPaused();
         playerPosition = game.getPlayer().getPosition();
         player         = game.getPlayer();
         island = game.getIsland();
@@ -494,12 +496,18 @@ public class GameTest extends junit.framework.TestCase
             game.collectItem(trap);
         }
         
-        //Check all predators have been killed
-        if(game.getPredatorsRemaining() != 0)
+        //If a move was not ok, then return false
+        if(!moveOK)
             return false;
-        else
-            return true; 
+        
+        //Force game update
+        game.updateGameState();
+        
+        //Check all predators have been killed
+        return game.getPredatorsRemaining() == 0; 
     }
+    
+    
     
     private boolean playerMoveNorth(int numberOfMoves)
     {

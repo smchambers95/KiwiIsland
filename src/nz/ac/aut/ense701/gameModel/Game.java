@@ -64,6 +64,7 @@ public class Game implements Runnable
         Thread gameThread = new Thread(this);
         gameThread.start();
         events = new LinkedList<>();
+        AIControllerPaused = false;
     }
     
     /***********************************************************************************************************************
@@ -678,7 +679,15 @@ public class Game implements Runnable
     {
         eventListeners.remove(listener);
     }
-   
+    
+    //Toggle the AIController
+    public void toggleAIPaused()
+    {
+        if(AIControllerPaused)
+            AIControllerPaused = false;
+        else
+            AIControllerPaused = true;
+    }
     
     /*********************************************************************************************************************************
      *  Private methods
@@ -698,9 +707,13 @@ public class Game implements Runnable
             if(player != null)
                 player.updateStamina(delta);  
             
-            // Update every predator controller we have
+            //Process predator AI if the AIController is not paused
+            if(!AIControllerPaused)
+            {
+                 // Update every predator controller we have
             for(AIPredatorController controller : predatorControllers)
                 controller.update(delta);
+            }
             
             updateGameState();
             
@@ -783,9 +796,8 @@ public class Game implements Runnable
     {
         return ( isPlayerMovePossible(MoveDirection.NORTH)|| isPlayerMovePossible(MoveDirection.SOUTH)
                 || isPlayerMovePossible(MoveDirection.EAST) || isPlayerMovePossible(MoveDirection.WEST));
-
     }
-    
+        
     /**
      * Check if player is dropping trap in same tile as a kiwi or predator, if so, kill them. 
      */
@@ -1014,4 +1026,5 @@ public class Game implements Runnable
     private String loseMessage  = "";
     private String playerMessage  = "";   
     private boolean enoughStaminaToMove;
+    private boolean AIControllerPaused;
 }
