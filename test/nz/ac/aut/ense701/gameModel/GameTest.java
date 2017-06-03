@@ -451,15 +451,204 @@ public class GameTest extends junit.framework.TestCase
     @Test
     public void testTrapAllPredators()
     {
+        // Reset the game
+        setUp();
+        
         //Trap all predators
         assertTrue("All predators should be dead", trapAllPredators());
+    }
+    
+    @Test
+    public void testAllKiwisSaved()
+    {
+        // Reset the game
+        setUp();
+        
+        //Save all Kiwis
+        assertTrue("All kiwis should be saved", saveAllKiwis());
+    }
+    
+    @Test
+    public void testGameWinable()
+    {
+        // Reset the game
+        setUp();       
+        
+        saveAllKiwis();
+        trapAllPredators();
+        
+        assertTrue("Game should be won", game.getState() == GameState.WON);           
     }
 /**
  * Private helper methods
  */
     
+    private boolean saveAllKiwis()
+    { 
+        
+       //Move player to start position if they are not already.
+       player.setPosition(new Position(island,0,5));
+      
+       //Move to kiwi 1
+       boolean moveOK = playerMoveEast(3);
+       //Save kiwi 1
+       if(moveOK)
+       {
+           //Collect all objects at player location
+            for(Object e : game.getOccupantsPlayerPosition())
+            {
+                game.collectItem(e);   
+            }
+            
+            //Move back to safezone
+            moveOK = playerMoveWest(3);
+       } 
+       //Drop kiwi 1 in safezone
+       if(moveOK)
+       {
+            for(Object item : game.getPlayerInventory()) 
+                game.dropItem(item);
+       }
+       
+       
+       //Give player stamina - this doesnt effect the results because the player has stamina 
+       //regen in game. So if the run out of stamina, they just need to wait. But we don't 
+       //want the test to wait, or go out of it's way to find baskets.
+       player.increaseStamina(10);
+       
+       //Move player to kiwi 2 and collect kiwi
+        if(moveOK)
+            moveOK = playerMoveSouth(3);  
+        if(moveOK)
+        {   
+            moveOK = playerMoveEast(4);
+            //Collect all objects at player location
+            for(Object e : game.getOccupantsPlayerPosition())
+            {
+                game.collectItem(e);   
+            } 
+        }
+        //move player back to safe zone with kiwi 2
+        if(moveOK)
+            moveOK = playerMoveWest(4);
+        if(moveOK) 
+            moveOK = playerMoveNorth(3);
+        //drop kiwi 2 in safe zone
+        if(moveOK)
+        {
+            for(Object item : game.getPlayerInventory()) 
+            {
+                game.dropItem(item);
+            }              
+        }
+        
+        //Give player stamina
+        player.increaseStamina(10);  
+       
+        //save kiwi 3
+        if(moveOK)
+           moveOK = playerMoveSouth(4);  
+        if(moveOK)
+        {   
+            moveOK = playerMoveEast(1);
+            //Collect all objects at player location
+            for(Object e : game.getOccupantsPlayerPosition())
+            {
+                game.collectItem(e);   
+            } 
+        }
+        //Move player back to safe zone and drop kiwi
+        if(moveOK)
+            moveOK = playerMoveWest(1);
+        if(moveOK) 
+            moveOK = playerMoveNorth(4);
+        //drop kiwi 3 in safe zone
+        if(moveOK)
+        {
+            for(Object item : game.getPlayerInventory()) 
+            {
+                game.dropItem(item);
+            }              
+        }
+        
+        //give player max stamina
+        player.increaseStamina(100);
+        
+        //Move player to kiwi 4
+        if(moveOK)
+           moveOK = playerMoveWest(2);  
+         if(moveOK)
+           moveOK = playerMoveSouth(9);  
+        if(moveOK)
+        {   
+            moveOK = playerMoveWest(3);
+            //give player max stamina
+            player.increaseStamina(100);
+            //Collect all objects at player location
+            for(Object e : game.getOccupantsPlayerPosition())
+            {
+                game.collectItem(e);   
+            } 
+        }
+        //Move player back to safe zone and drop kiwi
+        if(moveOK)
+            moveOK = playerMoveEast(3);
+        if(moveOK) 
+            moveOK = playerMoveNorth(9);
+         if(moveOK) 
+            moveOK = playerMoveEast(2);
+        //drop kiwi 3 in safe zone
+        if(moveOK)
+        {
+            for(Object item : game.getPlayerInventory()) 
+            {
+                game.dropItem(item);
+            }              
+        }
+        
+        //Save kiwi 5
+        //give player max stamina
+        player.increaseStamina(100);
+        
+        //Move player to kiwi 5
+        if(moveOK)
+            moveOK = playerMoveSouth(8);
+        if(moveOK) 
+            moveOK = playerMoveEast(4);
+        if(moveOK)
+        {               
+            //Collect all objects at player location
+            for(Object e : game.getOccupantsPlayerPosition())
+            {
+                game.collectItem(e);   
+            } 
+        }
+        //Move player back to safe zone and drop kiwi
+        if(moveOK)
+            moveOK = playerMoveWest(4);
+        if(moveOK) 
+            moveOK = playerMoveNorth(8);
+        //drop kiwi 5 in safe zone
+        if(moveOK)
+        {
+            for(Object item : game.getPlayerInventory()) 
+            {
+                game.dropItem(item);
+            }              
+        }
+        
+       return game.getSavedKiwisCount() == game.getTotalKiwis();  
+    }
+    
+    //Trap all predators
     private boolean trapAllPredators()
     {
+        //give player max stamina
+        player.increaseStamina(100);
+        
+        //Move player to start position if they are not already.
+        player.setPosition(new Position(island,0,5));
+       
         //Firstly player needs a trap
         Tool trap = new Tool(playerPosition,"Trap", "A predator trap",1.0);
         game.collectItem(trap);
